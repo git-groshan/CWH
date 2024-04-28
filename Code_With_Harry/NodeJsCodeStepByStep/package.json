@@ -1,0 +1,11 @@
+{
+  "name": "nodebycodestepbystep",
+  "version": "1.0.0",
+  "description": "\"This is node tutorial by code Step By Steps\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "\"Roshan Gupta\"",
+  "license": "ISC"
+}

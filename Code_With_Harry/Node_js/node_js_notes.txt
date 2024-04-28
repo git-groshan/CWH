@@ -1,0 +1,71 @@
+what is Node js?
+- An free and open source server environment
+- JavaScript can be used on the server
+- A single language for both front-end and backend
+
+Node.js is a runtime environment that allows you to run JavaScript code outside of a web browser. 
+It is built on the V8 JavaScript engine, which is the same engine that powers Google Chrome. 
+Node.js enables developers to write server-side code using JavaScript, which was traditionally used only for client-side scripting in web browsers.
+
+Node.js is used for various purposes, including:
+
+1. **Server-side web development:** Node.js allows developers to create web servers using JavaScript. It provides a set of built-in modules that simplify tasks such as handling HTTP requests, serving files, and interacting with databases. Popular web frameworks like Express.js are built on top of Node.js.
+
+2. **Command-line tools:** Node.js can be used to create command-line tools and scripts. It provides access to the file system, networking capabilities, and other system resources, making it suitable for building utilities and automation scripts.
+
+3. **Real-time applications:** Node.js is well-suited for building real-time applications such as chat applications, online gaming platforms, and collaboration tools. Its event-driven architecture and non-blocking I/O make it efficient for handling concurrent connections and processing large volumes of data in real-time.
+
+4. **API servers:** Many companies use Node.js to build lightweight and scalable API servers. Its asynchronous nature allows it to handle multiple requests simultaneously without blocking, making it suitable for high-traffic applications.
+
+Overall, Node.js is popular because it allows developers to use JavaScript for both client-side and server-side development, which can streamline the development process and leverage the skills of front-end developers in building full-stack applications. Additionally, its non-blocking I/O model makes it efficient for handling I/O-intensive operations, making it a good choice for building scalable and high-performance applications.
+
+
+
+
+client side - generally front-end
+server side - generally back-end
+
+- NodeJs is a runtime environment for JS which runs on server side 
+- It runs on Asynchronous Non-Blocking I/O Model
+
+What is NPM(Node package manager) ?
+- NPM is package manager for Node 
+
+- npm init command to initialise a repo for  nodejs environment
+- It created a package.json file which keeps track of your package related info.
+
+## Install Node packages 
+
+- npm install <package name > 
+- Whenever we install a package , It is stored inside node_modules folder and in package.json there an extra key added name description 
+Eg- npm install express --save  # to install express package
+Eg- npm i @angular/cli
+
+- We generally don't push the node_modules folder to the production as it is heavy and anyone can access our code 
+- If we delete the node_modules folder to install again use npm install or npm i command to resintall it .
+- use -g option to install package globally (which can be accessible to any node project)
+Eg- npm i -g nodemon #nodemon can be used in any nodejs project
+-`nodemon` is a utility for Node.js that monitors for any changes in your source code and automatically restarts your server/application. It's often used during development to streamline the process of making changes and seeing their effects without manually stopping and restarting the server each time. This tool is especially handy for web development where you're constantly tweaking code and want to see the results immediately.
+
+# Dev-Dependency 
+- Some Dependency which we want to use only during the development but not in the production
+- to install those Dependency as Dev-Dependency use --save-dev option
+Eg-  npm install --save-dev nodemon # nodemon is installed as a dev-Dependency
+
+# Uninstall a Dependency
+- npm uninstall <package-name>
+
+# What is package-lock.json
+- It stored the Dependency tree as it is 
+- Since to Dependencies itself depend on other Dependencies so to know what other Dependencies are installed of the current Dependencies which we have installed is stored in package-lock.json
+For Eg- to see what other Dependencies installed while installing express Dependencies which depends on other Dependencies their verions are stored inside  in package-lock.json
+
+
+# import
+- to get import from any package which exports somthing , we can get it using require("file_path") and can store it in any variable to use it further
+- This kind of import system is called "common js modules"
+- There is another way of importing is ES6 modules
+
+# Module Wrapper Function 
+-
+

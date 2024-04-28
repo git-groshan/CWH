@@ -1,0 +1,113 @@
+Q- What is NodeJs?
+- NodeJs is not a language 
+-This is a server Environment or server runtime Environment
+-NodeJs can connect with database(bcz NodeJs runs on server side hence it's get connected but JS runs on browser side )
+- code and syntaxt is very similar to javaScript
+- But Not exactly the same
+- NodeJs free , open , source 
+- NodeJs use Chrome's V8 engine to execute code.
+
+Q- Why do we use NodeJs?
+- NodeJs mostly used for API (other can be use like PHP , Python )
+- SO we can connect the same database with webApp , Modbile webApp
+- Node is easy to understand who knows javaScript
+-NodeJS is super-fast for API's
+- WIth Node and javaScript, you can become full stack developer.
+- NodeJS writeen in C, C++, javaScript
+
+Q- JavaScript Vs NodeJs
+- JavaScript and NodeJS code syntax is almost same
+-You can not connect JavaScript to database
+-Node can connect with database
+-NodeJs run on the server side
+-JavaScript is run on the browser
+
+Major Topics 
+- What is Node JS , How it works , Instal and run , Make Basic API
+- Use with Express.js 
+- UI with NodeJs
+ - UI Event 
+ -Forms 
+ - Webpages etc 
+-NodeJS Event
+-Middleware 
+-Major Packages
+-Connect with database
+-Make Major API
+-API validation 
+- Interview Questions 
+- Much more
+
+
+
+####### Basic Before Getting started ####
+
+Q- What are client and server side ?
+Ans- Browser is a client which request the server for any web page and the server servers as a package of (HTML/CSS/JS etc ) and then browser received and renders it 
+
+Q- How NodeJs Use JavaScript internally?
+Ans- Chrome browser uses V8 Engine to execute the JavaScript code.
+Similary NodeJs uses V8 Engine as server side which executed Js code and gives the result which is then parse to client side
+
+Q- Where do we use Node(client or server)
+- Server side 
+
+Q- What developer make with Node JS
+- developer makes API with NodeJS
+-So we can connect server with client
+-Node can make API for Web , Android , and IOS etc
+-Node can also make website
+
+Q- Interview Question 
+Is console.log() in browser and in nodeJs are same ?
+-Ans- No They are similar but not same .
+
+
+
+############## CORE MODULES In NodeJs #############
+1. What are Core MODULES ?
+Answer- 
+In Node.js, modules are JavaScript files that contain reusable code. There are several types of modules in Node.js, including core modules and global modules:
+
+1. **Core Modules:**
+   
+   Core modules are built-in modules that are part of the Node.js runtime. They provide essential functionality for working with the file system, networking, streams, utilities, and more. Some examples of core modules include `fs` (file system), `http` (HTTP server), `path` (path manipulation), `util` (utilities), and `events` (event emitter).
+
+   Core modules can be imported into your Node.js application using the `require()` function without specifying a path, as Node.js knows where to find them. For example:
+
+   ```javascript
+   const fs = require('fs');
+   ```
+
+2. **Global Modules:**
+   
+   Global modules are third-party modules that are installed globally on your system using npm (Node Package Manager) with the `-g` flag. These modules are installed in a central location on your system and can be accessed from any directory.
+
+   To install a module globally, you would use the following npm command:
+
+   ```bash
+   npm install -g <module_name>
+   ```
+
+   After installing a global module, you can use it in your Node.js applications without specifying a path. For example:
+
+   ```javascript
+   const lodash = require('lodash');
+   ```
+
+Now, let's summarize the differences between core modules and global modules:
+
+- **Source:** Core modules are built-in modules provided by Node.js, whereas global modules are third-party modules installed from npm.
+  
+- **Installation:** Core modules come pre-installed with Node.js and do not require separate installation. Global modules need to be installed manually using npm with the `-g` flag.
+
+- **Usage:** Core modules can be imported into your application using the `require()` function without specifying a path. Global modules are also imported using `require()`, but they must be installed globally and can be accessed from any directory on your system.
+
+- **Access:** Core modules are available everywhere Node.js is installed, while global modules are only available on the system where they are installed.
+
+In summary, core modules are built-in modules provided by Node.js, while global modules are third-party modules installed from npm and are available globally on your system. Both types of modules can be imported into your Node.js applications using the `require()` function, but they differ in installation and access.
+
+
+
+
+
