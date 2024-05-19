@@ -1,0 +1,131 @@
+Q- What is MongDB ?
+Ans- MongDB is a NoSQL database i.e data is not stored in form of table.
+- The data stored in a collection (i.e in form of Object). {obj1 , obj2}
+-In collection there is not any concept of row and column
+- Data is stored in form of Object.
+
+Q- MongDB Vs SQL
+Ans- 
+MongoDB and SQL (Structured Query Language) are both databases used for storing and managing data, but they differ significantly in their architecture, data models, query languages, and use cases. Here's a comparison between MongoDB and SQL databases:
+
+1. **Data Model**:
+   - **MongoDB**: MongoDB is a NoSQL database that uses a document-oriented data model. It stores data in flexible, JSON-like documents, allowing nested data structures and dynamic schemas. Each document can have a different structure, which provides flexibility but can also lead to schema-less data.
+   - **SQL**: SQL databases, also known as relational databases, use a table-based data model. Data is organized into rows and columns within tables, and each table has a predefined schema that specifies the columns and their data types.
+
+2. **Query Language**:
+   - **MongoDB**: MongoDB uses a query language based on JSON-like documents. Queries are written in a syntax similar to JavaScript and use methods like `find()` and `aggregate()` to retrieve and manipulate data.
+   - **SQL**: SQL databases use the Structured Query Language (SQL) for querying and manipulating data. SQL provides a standardized language for defining and interacting with relational databases, with commands like `SELECT`, `INSERT`, `UPDATE`, and `DELETE`.
+
+3. **Scalability**:
+   - **MongoDB**: MongoDB is designed to scale horizontally, meaning it can distribute data across multiple servers to handle large volumes of data and high traffic loads. It supports sharding, which partitions data across multiple servers, and replication, which maintains multiple copies of data for fault tolerance and high availability.
+   - **SQL**: SQL databases typically scale vertically, meaning they can handle increased workload by adding more resources (CPU, memory, storage) to a single server. While some SQL databases support replication and clustering for high availability, scaling out horizontally can be more challenging.
+
+4. **Schema Flexibility**:
+   - **MongoDB**: MongoDB offers schema flexibility, allowing documents within a collection to have different structures. This makes it suitable for applications with evolving or unpredictable data requirements.
+   - **SQL**: SQL databases have a rigid schema with fixed columns and data types for each table. Any changes to the schema require altering the table structure, which can be cumbersome for applications with changing data models.
+
+5. **Transactions**:
+   - **MongoDB**: MongoDB supports multi-document transactions starting from version 4.0, allowing ACID (Atomicity, Consistency, Isolation, Durability) properties within a single replica set.
+   - **SQL**: SQL databases have traditionally supported transactions, allowing complex operations to be performed atomically and consistently across multiple tables. ACID transactions are a fundamental feature of SQL databases.
+
+6. **Use Cases**:
+   - **MongoDB**: MongoDB is well-suited for applications with large volumes of unstructured or semi-structured data, such as content management systems, real-time analytics, and mobile app backends.
+   - **SQL**: SQL databases are commonly used for applications that require complex queries, transactions, and strict data consistency, such as financial systems, e-commerce platforms, and enterprise applications.
+
+In summary, the choice between MongoDB and SQL databases depends on factors such as the nature of the data, the scalability requirements, the complexity of queries, and the need for transaction support. MongoDB offers flexibility and scalability for modern applications with dynamic data models, while SQL databases provide strong consistency and transactional capabilities for mission-critical applications.
+
+
+###########  Basic mongDB commands  ###########
+
+Sure, here are some basic MongoDB commands commonly used in general and their meanings:
+
+1. **`show dbs`**: Displays a list of all databases on the MongoDB server.
+
+2. **`use <database>`**: Switches to the specified database or creates it if it doesn't exist.
+
+3. **`show collections`**: Lists all collections in the current database.
+
+4. **`db.<collection>.find()`**: Retrieves documents from the specified collection. If no query criteria are provided, it returns all documents in the collection.
+
+5. **`db.<collection>.findOne()`**: Retrieves a single document from the specified collection. If multiple documents match the query criteria, it returns only the first document found.
+
+6. **`db.<collection>.insertOne()`**: Inserts a single document into the specified collection.
+
+7. **`db.<collection>.insertMany()`**: Inserts multiple documents into the specified collection.
+
+8. **`db.<collection>.updateOne()`**: Updates a single document that matches the specified filter in the specified collection.
+
+9. **`db.<collection>.updateMany()`**: Updates multiple documents that match the specified filter in the specified collection.
+
+10. **`db.<collection>.deleteOne()`**: Deletes a single document that matches the specified filter in the specified collection.
+
+11. **`db.<collection>.deleteMany()`**: Deletes multiple documents that match the specified filter in the specified collection.
+
+12. **`db.<collection>.aggregate()`**: Performs aggregation operations on the specified collection, such as grouping, sorting, and filtering.
+
+13. **`db.<collection>.count()`**: Returns the count of documents in the specified collection that match the specified query criteria.
+
+14. **`db.<collection>.drop()`**: Drops the specified collection, permanently removing all documents and indexes associated with it.
+
+15. **`db.dropDatabase()`**: Drops the current database, permanently removing all collections, documents, and indexes associated with it.
+
+These are some of the basic MongoDB commands used for managing databases, collections, and documents. They provide the fundamental functionality needed for creating, reading, updating, and deleting data in MongoDB. Depending on your application requirements, you may need to use additional commands or perform more complex operations using aggregation, indexing, and other advanced features provided by MongoDB.
+
+##### CRUD operations in mongDB ########
+
+CRUD stands for Create, Read, Update, and Delete, which are the basic operations for managing data in a database. In MongoDB, CRUD operations are performed using methods provided by the MongoDB shell or a MongoDB driver. Here's how you can perform CRUD operations in MongoDB:
+
+1. **Create (Insert)**:
+   - To insert a single document into a collection:
+     ```javascript
+     db.collection.insertOne({ key: value });
+     ```
+
+   - To insert multiple documents into a collection:
+     ```javascript
+     db.collection.insertMany([{ key1: value1 }, { key2: value2 }]);
+     ```
+
+2. **Read (Query)**:
+   - To find documents that match specific criteria:
+     ```javascript
+     db.collection.find({ key: value });
+     ```
+
+   - To find a single document that matches specific criteria:
+     ```javascript
+     db.collection.findOne({ key: value });
+     ```
+
+   - To count the number of documents that match specific criteria:
+     ```javascript
+     db.collection.count({ key: value });
+     ```
+
+3. **Update**:
+   - To update a single document that matches specific criteria:
+     ```javascript
+     db.collection.updateOne({ filter }, { $set: { key: value } });
+     ```
+
+   - To update multiple documents that match specific criteria:
+     ```javascript
+     db.collection.updateMany({ filter }, { $set: { key: value } });
+     ```
+
+4. **Delete**:
+   - To delete a single document that matches specific criteria:
+     ```javascript
+     db.collection.deleteOne({ filter });
+     ```
+
+   - To delete multiple documents that match specific criteria:
+     ```javascript
+     db.collection.deleteMany({ filter });
+     ```
+
+Replace `collection` with the name of your MongoDB collection and `{ key: value }` with the criteria you want to match. The `$set` operator in the update operations is used to update specific fields in the document.
+
+It's important to note that MongoDB provides additional options and operators for performing more complex queries and updates, such as sorting, limiting, aggregating, and indexing. You can explore the MongoDB documentation for more details on these operations and their options.
+
+# We don't need to create an ID for unique identification. Mongo internally does this for us.

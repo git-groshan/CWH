@@ -107,6 +107,15 @@ Now, let's summarize the differences between core modules and global modules:
 
 In summary, core modules are built-in modules provided by Node.js, while global modules are third-party modules installed from npm and are available globally on your system. Both types of modules can be imported into your Node.js applications using the `require()` function, but they differ in installation and access.
 
+############# ALL ABOUT PACKAGE.JSON FILE ##############
+Q- What is Package.json file
+Ans- It keeps the track of your project detail like project name , git repsoitory , version , modules used 
+
+Q- How to make it ?
+Ans- npm init command to initialise a repo as a nodeJs repsoitory
+
+Q- What does package-lock.json do?
+Ans - IT keeps the information about the Packages which are being used in the project.
 
 
 

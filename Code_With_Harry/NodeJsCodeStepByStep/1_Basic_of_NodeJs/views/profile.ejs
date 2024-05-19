@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+</head>
+<body>
+    <h1>This is profile page using template engine</h1>
+    <h1>User <%= Item to be printed %></h1>
+    <p>User name is <%= user.name %></p>
+    <p>User age is <%= user.age %></p>
+
+    <ul>
+        <% user.skills.forEach((item)=>{ %>
+            <li><%= item %></li>
+
+         <% })%>
+    </ul>
+
+    
+</body>
+</html>
