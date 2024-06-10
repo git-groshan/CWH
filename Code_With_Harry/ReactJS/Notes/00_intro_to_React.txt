@@ -1,0 +1,225 @@
+-React is used to build single page application.
+-single page application are loaded once only and other things handled by javascript 
+- React Js based on component.Each component can by used anywhere . Write once use everywhere
+- Node JS is runtime environment for JS which helps to run JS code in our machine not on browser only.
+- thunder client extension is similar to post man 
+
+React (also known as React.js or ReactJS) is a popular JavaScript library developed by Facebook for building user interfaces, especially single-page applications where you need a fast and interactive user experience. React allows developers to create large web applications that can update and render efficiently in response to data changes.
+
+### Core Concepts
+
+1. **Components**: The building blocks of a React application. Components are reusable pieces of the UI, which can be either functional (stateless) or class-based (stateful).
+
+   - **Functional Components**: These are simple JavaScript functions that take props as an argument and return React elements.
+
+     ```javascript
+     function Welcome(props) {
+       return <h1>Hello, {props.name}</h1>;
+     }
+     ```
+
+   - **Class Components**: These are ES6 classes that extend `React.Component` and have a `render` method.
+
+     ```javascript
+     class Welcome extends React.Component {
+       render() {
+         return <h1>Hello, {this.props.name}</h1>;
+       }
+     }
+     ```
+
+2. **JSX (JavaScript XML)**: A syntax extension for JavaScript that looks similar to HTML and is used with React to describe what the UI should look like.
+
+   ```javascript
+   const element = <h1>Hello, world!</h1>;
+   ```
+
+3. **Props**: Short for properties, props are read-only inputs passed from a parent component to a child component. They allow you to pass data and event handlers down the component tree.
+
+   ```javascript
+   function Welcome(props) {
+     return <h1>Hello, {props.name}</h1>;
+   }
+   ```
+
+4. **State**: A built-in object that allows components to create and manage their own data. State can change over time and, when it does, it causes the component to re-render.
+
+   ```javascript
+   class Clock extends React.Component {
+     constructor(props) {
+       super(props);
+       this.state = { date: new Date() };
+     }
+
+     componentDidMount() {
+       this.timerID = setInterval(() => this.tick(), 1000);
+     }
+
+     componentWillUnmount() {
+       clearInterval(this.timerID);
+     }
+
+     tick() {
+       this.setState({
+         date: new Date()
+       });
+     }
+
+     render() {
+       return (
+         <div>
+           <h1>Hello, world!</h1>
+           <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+         </div>
+       );
+     }
+   }
+   ```
+
+5. **Lifecycle Methods**: Special methods in class components that run at specific points in a component's lifecycle (e.g., when the component is mounted, updated, or unmounted). Common lifecycle methods include `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`.
+
+6. **Hooks**: Functions that let you use state and other React features in functional components. The most common hooks are `useState` and `useEffect`.
+
+   - **useState**: Allows you to add state to functional components.
+
+     ```javascript
+     import React, { useState } from 'react';
+
+     function Counter() {
+       const [count, setCount] = useState(0);
+
+       return (
+         <div>
+           <p>You clicked {count} times</p>
+           <button onClick={() => setCount(count + 1)}>Click me</button>
+         </div>
+       );
+     }
+     ```
+
+   - **useEffect**: Allows you to perform side effects in functional components, such as fetching data or setting up subscriptions.
+
+     ```javascript
+     import React, { useEffect, useState } from 'react';
+
+     function Example() {
+       const [count, setCount] = useState(0);
+
+       useEffect(() => {
+         document.title = `You clicked ${count} times`;
+       }, [count]);
+
+       return (
+         <div>
+           <p>You clicked {count} times</p>
+           <button onClick={() => setCount(count + 1)}>Click me</button>
+         </div>
+       );
+     }
+     ```
+
+### Advantages of React
+
+1. **Declarative**: React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.
+
+2. **Component-Based**: Build encapsulated components that manage their own state, then compose them to make complex UIs. Component logic is written in JavaScript instead of templates, so you can easily pass rich data through your app and keep state out of the DOM.
+
+3. **Learn Once, Write Anywhere**: Develop new features in React without rewriting existing code. React can also render on the server using Node and power mobile apps using React Native.
+
+### React Ecosystem
+
+1. **React Router**: A standard library for routing in React. It enables navigation among views or different components in a React application, allows browser URL updates, and keeps UI in sync with the URL.
+
+   ```javascript
+   import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
+   function App() {
+     return (
+       <Router>
+         <div>
+           <nav>
+             <ul>
+               <li>
+                 <Link to="/">Home</Link>
+               </li>
+               <li>
+                 <Link to="/about">About</Link>
+               </li>
+               <li>
+                 <Link to="/users">Users</Link>
+               </li>
+             </ul>
+           </nav>
+
+           <Route path="/" exact component={Home} />
+           <Route path="/about" component={About} />
+           <Route path="/users" component={Users} />
+         </div>
+       </Router>
+     );
+   }
+   ```
+
+2. **Redux**: A state management library often used with React to manage the state of an application. It provides a predictable state container, making it easier to manage the state of large applications.
+
+   ```javascript
+   import { createStore } from 'redux';
+   import { Provider } from 'react-redux';
+   import rootReducer from './reducers';
+
+   const store = createStore(rootReducer);
+
+   function App() {
+     return (
+       <Provider store={store}>
+         <MyComponent />
+       </Provider>
+     );
+   }
+   ```
+
+3. **Next.js**: A popular React framework that enables server-side rendering and generating static websites for React-based web applications. It provides features like pre-rendering, static site generation, and API routes.
+
+   ```javascript
+   import React from 'react';
+   import Head from 'next/head';
+
+   function Home() {
+     return (
+       <div>
+         <Head>
+           <title>Home Page</title>
+         </Head>
+         <h1>Welcome to Next.js!</h1>
+       </div>
+     );
+   }
+
+   export default Home;
+   ```
+
+4. **Create React App**: An officially supported way to create single-page React applications. It offers a modern build setup with no configuration.
+
+   ```bash
+   npx create-react-app my-app
+   cd my-app
+   npm start
+   ```
+
+### Conclusion
+
+React.js is a powerful library for building user interfaces with a component-based architecture and a declarative approach. It allows developers to create dynamic and interactive web applications with ease. With a rich ecosystem of tools and libraries, React can be adapted for a wide range of applications, from simple websites to complex web and mobile apps.
+
+Ques- What is props component ?
+Ans- Props is short form of properties.
+Supoose I made a template , template properties is props.
+Q- What is state of component?
+- Component ki state mtlb usme kya kya details hai 
+
+
+######### Important #########
+
+- Public folder k andar jo index.html file h usme jo div jiski id root h wahi div JS ki help se populate hoga 
+- SRC k andar app.js ek component h aur index.js entry point h humara 
+- hum sare changes app.js me krenge woh automatically index.js read krke index.html k div id=root pr populate kr dega 
+- npm start --> to run react app 
