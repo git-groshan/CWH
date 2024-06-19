@@ -12,6 +12,7 @@ export default function About() {
         backgroundColor:'black',
         border: '1px solid white'
     }
+    
     const [myStyle , setMyStyle] = useState(intialState);
     const [btnText , setBtnText] = useState("Dark Mode");
     // let myStyle = {
@@ -61,7 +62,7 @@ export default function About() {
             <div className="accordion-item">
                 <h2 className="accordion-header">
                 <button className="accordion-button collapsed" style={myStyle} type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Accordion Item #3
+                    <strong> Accordion Item #3 </strong>
                 </button>
                 </h2>
                 <div id="collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
