@@ -1,6 +1,7 @@
 const { type } = require('@testing-library/user-event/dist/type');
 const mongoose = require('mongoose');
 const connectToMongo = require('../dbConnect');
+const {Schema} = mongoose;
 
 
 const NotesSchema = new mongoose.Schema({
