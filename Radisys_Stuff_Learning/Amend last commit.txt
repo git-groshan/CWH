@@ -1,0 +1,72 @@
+If you've already committed and pushed your changes to a remote branch but haven't yet created a pull request (PR), you can still change the author name and email associated with those commits. Here’s how you can do it:
+
+### 1. **Change the Author Name and Email for the Last Commit**
+If you only need to change the author information for the most recent commit, you can use the following steps:
+
+1. **Set the Correct Name and Email Globally or Locally:**
+   - Set the correct name and email globally (if you want to use it for all repositories):
+     ```bash
+     git config --global user.name "Your New Name"
+     git config --global user.email "yournewemail@example.com"
+     ```
+   - Or set them locally for the current repository:
+     ```bash
+     git config user.name "Your New Name"
+     git config user.email "yournewemail@example.com"
+     ```
+
+2. **Amend the Last Commit with the New Information:**
+   - Run the following command to amend the last commit with the new author information:
+     ```bash
+     git commit --amend --author="Your New Name <yournewemail@example.com>" --no-edit
+     ```
+
+3. **Force Push the Updated Commit to the Remote Branch:**
+   - You need to force-push the amended commit to update the remote branch:
+     ```bash
+     git push --force-with-lease
+     ```
+
+### 2. **Change the Author Name and Email for Multiple Commits**
+If you need to change the author information for multiple commits, you can use an interactive rebase:
+
+1. **Start an Interactive Rebase:**
+   - Determine how many commits back you need to change (e.g., 3 commits):
+     ```bash
+     git rebase -i HEAD~3
+     ```
+   - This opens an editor where you’ll see a list of your commits.
+
+2. **Mark the Commits for Rewriting:**
+   - For each commit you want to modify, change `pick` to `edit`. Save and close the editor.
+
+3. **Change the Author Information for Each Commit:**
+   - For each commit, set the new author information:
+     ```bash
+     git commit --amend --author="Your New Name <yournewemail@example.com>" --no-edit
+     ```
+   - After amending each commit, continue the rebase with:
+     ```bash
+     git rebase --continue
+     ```
+
+4. **Force Push the Updated Commits to the Remote Branch:**
+   - After the rebase is complete, force-push the changes:
+     ```bash
+     git push --force-with-lease
+     ```
+
+### 3. **Verify the Changes**
+After performing these steps, you can verify that the author information has been updated by checking the commit history:
+
+```bash
+git log --format='%h %an <%ae> %s'
+```
+
+This will show you the short commit hash, author name, email, and the commit message for each commit.
+
+### **Important Notes:**
+- **Force Pushing:** Always use `--force-with-lease` instead of `--force` when pushing to a shared branch to avoid overwriting changes made by others.
+- **Collaboration:** If others have already pulled the commits, changing the history might cause conflicts. Coordinate with your team before making such changes.
+
+These steps should help you successfully change the author name and email for commits that have already been pushed but are not yet part of a pull request.

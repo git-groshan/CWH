@@ -1,0 +1,95 @@
+To monitor memory usage while running a binary on a Linux server, you can use several tools and commands. Here are some commonly used methods:
+
+### Using `top`
+
+The `top` command provides a real-time view of system resource usage, including memory.
+
+1. Open a terminal.
+2. Run your binary in the background or from another terminal if you want to monitor it continuously.
+3. Type `top` in the terminal and press Enter.
+4. Press `Shift + M` to sort the processes by memory usage.
+
+### Using `htop`
+
+`htop` is an enhanced version of `top` with a more user-friendly interface.
+
+1. Install `htop` if it's not already installed:
+   ```sh
+   sudo apt-get install htop   # On Debian/Ubuntu-based systems
+   sudo yum install htop       # On CentOS/RHEL-based systems
+   ```
+2. Open a terminal and run `htop`.
+3. You can scroll through the list of processes and sort by memory usage.
+
+### Using `ps`
+
+The `ps` command can show memory usage of a specific process.
+
+1. Run your binary.
+2. Find the process ID (PID) of your binary:
+   ```sh
+   ps aux | grep your_binary_name
+   ```
+3. Use `ps` to check memory usage:
+   ```sh
+   ps -p PID -o %mem,rss,cmd
+   ```
+   Replace `PID` with the actual process ID.
+
+### Using `pmap`
+
+The `pmap` command reports memory usage for a specific process.
+
+1. Find the PID of your binary as shown above.
+2. Run `pmap` to check memory usage:
+   ```sh
+   pmap -x PID
+   ```
+   Replace `PID` with the actual process ID.
+
+### Using `free`
+
+The `free` command shows the total system memory usage.
+
+1. Open a terminal.
+2. Run `free`:
+   ```sh
+   free -m
+   ```
+
+### Using `/proc`
+
+The `/proc` filesystem contains detailed information about processes.
+
+1. Find the PID of your binary.
+2. Check memory usage:
+   ```sh
+   cat /proc/PID/status | grep -i rss
+   ```
+   Replace `PID` with the actual process ID.
+
+### Example Script to Monitor Memory Usage
+
+You can create a simple script to monitor memory usage of your binary periodically:
+
+```sh
+#!/bin/bash
+
+BINARY_NAME="your_binary_name"
+LOG_FILE="memory_usage.log"
+
+echo "Time, %MEM, RSS" > $LOG_FILE
+
+while true; do
+  PID=$(pgrep -f $BINARY_NAME)
+  if [ -z "$PID" ]; then
+    echo "Process not found"
+    exit 1
+  fi
+  MEM_INFO=$(ps -p $PID -o %mem,rss --no-headers)
+  echo "$(date +%Y-%m-%d\ %H:%M:%S), $MEM_INFO" >> $LOG_FILE
+  sleep 1
+done
+```
+
+Replace `your_binary_name` with the actual name of your binary. This script will log the memory usage every second into `memory_usage.log`. You can adjust the `sleep` interval as needed.

@@ -5,6 +5,11 @@ const {Schema} = mongoose;
 
 
 const NotesSchema = new mongoose.Schema({
+    // user will act as a foreign key for Notes Schema to uniquely identify which notes belongs to which user 
+    user:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'user'
+    },
     title:{
         type:String,
         required: true

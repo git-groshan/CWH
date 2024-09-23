@@ -1,1 +1,67 @@
 Things to be covered 
+1. Revision of JS
+2. MERN stack learn
+3. Node js
+4. 
+
+
+
+// MERN stack Roadmap parikh jain
+MERN STACK
+	Roadmap link : https://www.propeers.in/roadmaps/65a133d62ee28f2460512ae6
+
+
+FRONTEND
+HTML
+Tables, tags, div, forms, apis
+CSS
+Flex, margin, padding, Media queries
+Javascript
+Functions, loops, OOPS, Closures, event loops, Promises
+React
+State Management, Components System, Hooks, Next JS
+BACKEND
+Node JS
+NPM, Modules
+Express JS
+MVC Architecture, CRUD Operations, Middlewares
+Mongo DB
+Basics of Databases,Mongoose, Query
+Advance
+Sockets, Authentications
+PROJECTS - Atleast one project - Frontend, Backend
+Ecommerce Project
+Social Media Project
+OTT Platform Project
+Personal Portfolio Project
+DEPLOYMENTS
+AWS
+Azure
+GCP
+Vercel 
+INTERNSHIPS/REMOTE JOBS/FULL TIME JOBS - https://www.propeers.in/jobs
+
+Internships
+Startups 
+LinkedIn/Twitter - Indian Founders
+20 people per day
+Product Based Companies
+Recruiters
+Software Engineers - Share your resume with the deployed project link
+Checkout Propeers Jobs Section
+REMOTE JOB
+Internships would be preferred.
+Twitter/LinkedIN - US based startup founders
+LinkedIn Job Opportunities
+Checkout Propeers Jobs Section
+FULL TIME JOBS
+Internships would be preferred.
+Product Based Companies
+Recruiters
+Software Engineers - Share your resume with the deployed project link
+Startups 
+LinkedIn/Twitter - Indian Founders
+20 people per day
+Checkout Propeers Jobs Section
+
+https://docs.google.com/document/d/1I3v_y4kyRmVNWNbJ1qjX9DqGuUaDx41SznF3qN1ZsmQ/edit

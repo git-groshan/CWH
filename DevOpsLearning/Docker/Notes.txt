@@ -1,0 +1,230 @@
+1. What is Container ?
+Ans - A way of packaging application with all the necessary dependencies and configuration
+- Portable artifact , easily share and moved around
+- makes develeopmetn and deployment more efficient 
+
+Where do container live ? 
+- container repository 
+- private repository
+- Public repository for docker is docker hub
+
+application Development Before Containers 
+- Installation process different on each OS environment 
+- MAny Steps where something could go wrong 
+
+application after Container
+- Own Isolated environment
+- packages with all needed configuration
+- one command to install the app 
+- run same app with 2 version 
+
+
+Application Development Before Containers 
+- configuration on the server needed 
+- dependecy version conflicts 
+- textual guide of deployment 
+- misuderstanding 
+
+Application Development After Containers 
+- Developers and Operation work together to package the application in a container 
+- No environmental configuration needed on the server - except docker runtime 
+
+Q- What is Container ? 
+- Layers of images 
+- Mostly Linux Base Image , bcz small in size 
+- Application Image on top
+
+
+######### Docker Image (not running) Vs Docker Container (running) ###########
+- Docker Image is a actual package but when we pull that package in our local environemnt and the start the appliaction that is called container and  we called container environment is created.
+- Docker Image is an artifact that can b<e moved around
+- container is just like a other processes which are running on our machine 
+docker run postgres:9.6
+docker run postgres:10.10 -> In this only those images are pulled which are changed in 10.10 version from 9.6 version rest unchanged images remain as it is. 
+
+
+
+################ Docker Vs Virtual Machine ##################
+
+OS has 2 layer - 1. OS kernal 2. Application layer 
+Different Linux Distribution may use same Linux Kernal but implemented different application on top. 
+
+Docker and VM both are virtualization tool but the different is which part of OS the virtualize 
+
+- Dokcer virtulizes the application layer and uses the kernal of the host 
+- VM virtulizes the Application and Kernal layer of OS i.e the complete OS which means Each VM has it's own kernal and app layer own cpu and core 
+- Docker Images such smaller whereas VM are bulkier in size 
+- Docker container start and run much fast as compare to VM 
+- VM of any OS can run on any OS host n  
+
+
+# Docker Images are not compatible with all kind of OS 
+We can't run Linux Based docker Image on windows Operating system. 
+# We need to Install Docker ToolBox(acts as bridge between kernal and Docker) which Abstract away the kernal to make it possible for your host to run different docker images. 
+
+
+####   Basic Command for Docker ############
+
+Difference between container and Image 
+- Container is a running environemnt for Image 
+- port binded : talk to application running isnide of container 
+- virtual file system 
+
+1. docker images -> list out all the images in our machine 
+2. docker run <REPOSITORY OR IMAGE ID> -> containerize the image to run it inside a container . It actually starts an image in a container 
+3. docker ps -> list out all running container 
+4. docker run -d <REPOSITORY OR IMAGE ID> ->  -d option enables to run docker image in a detach mode. 
+5. docker stop <container id> -> stop the image running inside the container 
+6. docker start <container id> -> start the image inside the container 
+7. docker ps -a -> list out all the container running and not-running 
+8. docker run redis:4.0 -> pulls the image if not present  and then run it. 
+
+
+ #### Container Port vs Host Port ########
+ - multiple container can run on your host machine 
+ - your laptop has only certain ports available.
+ - conflicts when same port on host machine
+ - We have to bind the host machine port with container port 
+ - 2 container can have same port but those port must bind to 2 different ports of host machine 
+ - otherwise we will get error. No 2 container can bind to same port of host machine whereas 2 container can have their own port same.   
+- Once the port binding b/w the host and the container is done we can actually connect to the running container using the port of the host.
+- some-app://localhost:3001
+
+
+ $ docker run -p 6000:6379  <REPOSITORY OR IMAGE ID> -> creates a new container and -p enables port binding of host with container port
+Here Host port 6000 is binded with container running on port 6379. 
+Hence any request coming at host port 6000 can interact with the image running inside the container 
+When we do port binding it creates a new container
+
+
+####### Debugging container ##########
+docker logs <container Id or NAMES> 
+docker run -d -p 6001:6379 --name redis-Older redis:4.0 -> we can give our custome name to container using --name option 
+docker run -d -p 6011:6379 --name redis-latest redis-> we can give our custome name to container using --name option 
+
+docker exec command is used to get a terminal of a running container
+
+docker exec -it <CONTAINER-ID or NAMES>  /bin/bash -> getting inside and enabling bash inside the running container. 
+use exit to get it our 
+# most of the container images are based on light-weight Linux distribution. 
+
+docker run -d -p --name  <image name> --> pull the images and start it i.e containerize it and start running that image inside it 
+docker start <container Id> -> It start/restarts the existing image inside the container 
+
+ 
+###################### Demo Project Overview ##########
+Workflow with docker 
+1. Development
+2. CI i.e continuous Integration/Delivery 
+3. Deployment
+
+
+Demo Project 
+Key Points - 
+1.Inside a Host machine There is Isolated Docker n/w in which docker images can talk to each other through container name no need of local host  port etc bcz they are inside the same n/w. 
+2.The App which are running outside the isolated docker n/w will talk to it through port
+3. Docker provides some in-built n/w  # docker network ls 
+
+docker network create mongo-network  --> to create our network 
+
+docker run -p 27017:27017 -d \
+-e MONGO_INITDB_ROOT_USERNAME=admin \
+-e MONGO_INITDB_ROOT_PASSWORD=passowrd \
+--name mongodb \
+--net  mongo-network \
+ mongo 
+
+-e enables  to set environemnt variable 
+--net is to specify in which n/w our mongo or image will run 
+
+
+docker logs <container id> --> to see logs of container 
+
+
+Let's run the mongo-express 
+
+
+docker run -d \
+-p 8081:8081 \
+-e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+-e ME_CONFIG_MONGODB_ADMINPASSOWRD=password \
+-e ME_CONFIG_MONGODB_SERVER=mongodb \   # container name 
+--net mongo-network \
+--name mongo-express \
+mongo-express   # image name 
+
+docker logs <container id> 
+ 
+
+
+ ########## Docker Compose ######
+- for running multiple docker containers 
+- to run multiple container we can create a mongo-docker-compose.yaml file to run all the container which are needed to run our application 
+in a structured way 
+- docker-compose is just a structure way to contain very normal common docker commands. 
+
+- We don't need to mention the docker n/w because Docker  Compose takes care of creating a common network
+
+mongo-docker-compose.yaml file structure
+- version and services are mandatory 
+
+version:'3'
+services:
+    mongodb:
+        image:mongo
+        ports:
+          -27017:27017
+        environemnt:
+         - MONGO_INITDB_ROOT_USERNAME=admin 
+
+    mongo-express:
+        image: mongo-express
+        ports:
+         -8080:8080
+        environemnt:
+         - ME_CONFIG_MONGODB_ADMINUSERNAME
+         ...
+
+
+to run this docker-compose file 
+$  docker-compose -f mongo.yaml up -d   # to start all container 
+$  docker-compose -f mongo.yaml down -d # stops and removes the container also the n/w is removed
+
+## Everything we configure in the container is gone once we restart the container. 
+There is no persitant in it. 
+## To have data persitant  use Docker volume
+
+
+####################### Dockerfile #######################
+- Jenking creates the docker-image of our developed application 
+- Dockerfile is a blueprint for building images 
+
+
+FROM node    # Base Image on which our app will be imaged
+ENV  MONGO_DB_USERNAME=admin\
+     MONGO_DB_PWD=password
+RUN  mkdir -p /home/app  # RUN command to run any kind of linux command (everything will be inside the container )
+COPY  .  /home/app   # COPY CMD executes on the HOST , to copy inside container we can use RUN command with cp 
+CMD["node" "/home/app/server.js"]  # executed an entry point linux command  inside the container 
+
+### Difference b/w CMD and RUN 
+CMD is an entrypoint linux command whereas we can have multiple RUN command but only one CMD command 
+
+### every image is built on top of other base image 
+### Dockerfile has no extension and the name should be Dockerfile 
+
+#How to Build an Image Using Dockerfile 
+
+$ docker build -t my-app:version-1.0 <Dockefile path>
+-t option is for tag 
+
+
+
+
+
+
+
+
+
+ 
+
