@@ -1,0 +1,53 @@
+To clone only the `test_sim` folder from the `5gran_dev` repository, you can use **Sparse Checkout** or **Shallow Clone with Filter**. Here’s how:
+
+---
+
+### **1. Using Sparse Checkout (Recommended)**
+This method allows you to clone only a specific directory while keeping it inside a Git repository.
+
+#### **Steps:**
+```sh
+git clone --no-checkout <repo_url> 5gran_dev
+cd 5gran_dev
+git sparse-checkout init --cone
+git sparse-checkout set test_sim
+git checkout <branch_name>  # e.g., main or develop
+```
+
+#### **Example:**
+```sh
+git clone --no-checkout https://example.com/your-repo.git 5gran_dev
+cd 5gran_dev
+git sparse-checkout init --cone
+git sparse-checkout set test_sim
+git checkout main
+```
+✅ This will only fetch the `test_sim` folder inside `5gran_dev`.
+
+---
+
+### **2. Using `git filter` for a Partial Clone (Alternative)**
+If you want to reduce download size and clone only a directory, use:
+
+```sh
+git clone --depth 1 --filter=blob:none --sparse <repo_url>
+cd 5gran_dev
+git sparse-checkout set test_sim
+```
+✅ This clones `test_sim` while keeping other files minimal.
+
+---
+
+### **3. Download Only (Without Git History)**
+If you don’t need the Git history and just want the folder:
+
+```sh
+mkdir test_sim
+cd test_sim
+git archive --remote=<repo_url> HEAD:test_sim | tar -x
+```
+✅ This downloads `test_sim` but won’t track changes with Git.
+
+---
+
+Let me know if you need help with a specific method! 🚀

@@ -1,0 +1,57 @@
+Let's break down how `grep` works with the `-A`, `-b`, and `-c` options:
+
+---
+
+### 🔹 `-A NUM`: Show **NUM lines After** a match
+
+```bash
+grep -A 3 "error" logfile.txt
+```
+✅ This prints the line matching `"error"` and **3 lines after** it.
+
+---
+
+### 🔹 `-b`: Show **byte offset** of the match
+
+```bash
+grep -b "error" logfile.txt
+```
+✅ This prepends the **byte offset** (position from start of file) to the matching line.
+
+**Example output:**
+```
+134:error occurred at line 5
+```
+Means the match starts at **byte 134** of the file.
+
+---
+
+### 🔹 `-c`: Show **count** of matching lines only
+
+```bash
+grep -c "error" logfile.txt
+```
+✅ This returns only the **number of lines that matched**, not the lines themselves.
+
+**Example output:**
+```
+5
+```
+Means there were 5 lines containing `"error"`.
+
+---
+
+### 🔸 Can you combine them?
+
+Yes, partially. For example:
+
+```bash
+grep -A2 -b "error" logfile.txt
+```
+
+- Will show matching lines **with byte offsets**, and **2 lines after** each.
+- `-c` is **not compatible** with `-A` or `-b`, because it suppresses all actual output.
+
+---
+
+Would you like a real example using a sample file to see the output of all 3 together?

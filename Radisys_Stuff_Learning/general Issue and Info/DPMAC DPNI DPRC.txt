@@ -1,0 +1,112 @@
+These terms — **DPMAC**, **DPNI**, and **DPRC** — are related to **NXP’s Data Path Acceleration Architecture (DPAA2)**, which is part of their Layerscape family of SoCs (System on Chips) used in networking, telecom, and embedded systems. These components are managed through the **MC (Management Complex)** firmware and the **restool** tool or kernel APIs.
+
+Let me explain each in detail with an example to tie them together.
+
+---
+
+### 🔹 1. **DPMAC** – *Data Path Media Access Controller*
+
+#### ✅ What it is:
+
+* A **physical port interface** that connects to the outside world.
+* Represents **Ethernet MAC hardware** (e.g., 1G/10G/25G MAC) on the SoC.
+
+#### ✅ Function:
+
+* Handles the **physical layer interface** (like SFP, QSGMII, RGMII).
+* Sends and receives data frames over the wire.
+
+#### ✅ Example:
+
+```bash
+restool dpmac info dpmac.3
+```
+
+This shows MAC #3's status, link speed, etc.
+
+#### 🔧 Use case:
+
+When you plug in an SFP module or connect an Ethernet cable, the corresponding DPMAC will be responsible for link negotiation and passing the data to internal switching/routing logic (via DPNI or similar).
+
+---
+
+### 🔹 2. **DPNI** – *Data Path Network Interface*
+
+#### ✅ What it is:
+
+* A **logical network interface** (software abstraction).
+* Similar to a Linux `eth0`, but it uses **hardware acceleration and queues** from the DPAA2 engine.
+
+#### ✅ Function:
+
+* Handles **packet I/O**, **buffering**, **QoS**, **classification**, and more.
+* Connects to DPMACs, other DPNIs, or virtual interfaces.
+
+#### ✅ Example:
+
+```bash
+restool dpni info dpni.5
+```
+
+#### 🔧 Use case:
+
+If your software (e.g., DPDK or kernel driver) wants to send or receive packets using hardware queues, it talks through a DPNI object.
+
+---
+
+### 🔹 3. **DPRC** – *Data Path Resource Container*
+
+#### ✅ What it is:
+
+* A **container** for grouping and isolating resources.
+* Each container can hold a number of objects like DPNI, DPMAC, DPIO, etc.
+
+#### ✅ Function:
+
+* Enables **resource partitioning** and **multi-tenancy**.
+* Acts like a virtual environment inside the Management Complex.
+
+#### ✅ Example:
+
+```bash
+restool dprc info dprc.1
+```
+
+#### 🔧 Use case:
+
+In a multi-user system, you can allocate one container (DPRC) for a VM or process, isolating its DPNIs, DPMACs, and memory regions. Like a mini-NFV setup.
+
+---
+
+### 🧩 How They Work Together – A Simple Example
+
+Imagine you're configuring a Linux-based router using DPAA2:
+
+1. You plug a cable into port 3. This maps to **DPMAC.3** (physical MAC).
+2. You want Linux to send/receive packets via this port. You create a **DPNI** and connect it to DPMAC.3.
+3. These objects live in a **DPRC**, which could be the default container (`dprc.1`) or a VM-specific one.
+
+```bash
+# Create a DPNI and connect it to DPMAC
+restool dpni create
+restool dpmac connect dpmac.3 dpni.5
+
+# Check they are in the same container
+restool dprc show dprc.1
+```
+
+Then, you bind this `dpni.5` to Linux via `fsl-mc` driver or use it with DPDK.
+
+---
+
+### 🔚 Summary Table
+
+| Term      | Full Form                    | Purpose                       | Comparable To              |
+| --------- | ---------------------------- | ----------------------------- | -------------------------- |
+| **DPMAC** | Data Path MAC                | Physical Ethernet port        | `eth0`'s hardware MAC      |
+| **DPNI**  | Data Path Network Interface  | Logical interface with queues | Virtual NIC in Linux/DPDK  |
+| **DPRC**  | Data Path Resource Container | Container for DPAA2 resources | Namespace or VM allocation |
+
+---
+
+Let me know if you’re using NXP’s LS2088A, LS1046A, or another board — I can tailor examples to your exact hardware.

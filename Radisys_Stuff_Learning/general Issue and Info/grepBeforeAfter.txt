@@ -1,0 +1,48 @@
+You can use the `grep` command with the `-C`, `-B`, or `-A` options to show additional lines along with the matched line.
+
+---
+
+### **1. Show 3 Lines Before and After the Match**
+```sh
+grep -C 3 "search_term" filename
+```
+✅ **Example:**
+```sh
+grep -C 3 "error" logfile.txt
+```
+- Shows 3 lines **before** and **after** the matching line.
+
+---
+
+### **2. Show 3 Lines Before the Match**
+```sh
+grep -B 3 "search_term" filename
+```
+✅ **Example:**
+```sh
+grep -B 3 "failed" system.log
+```
+- Shows **3 lines before** the match.
+
+---
+
+### **3. Show 3 Lines After the Match**
+```sh
+grep -A 3 "search_term" filename
+```
+✅ **Example:**
+```sh
+grep -A 3 "timeout" network.log
+```
+- Shows **3 lines after** the match.
+
+---
+
+### **4. Show 3 Lines Context for a Command Output**
+If you are grepping from a command output:
+```sh
+dmesg | grep -C 3 "usb"
+```
+- Shows **3 lines before and after** the "usb" keyword in `dmesg` logs.
+
+Let me know if you need more help! 🚀

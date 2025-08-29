@@ -1,0 +1,42 @@
+The error **"sudo: screen: command not found"** means that the `screen` command is not installed on your system.  
+
+### **How to Fix It?**  
+
+#### **1. Install `screen` on Ubuntu/Debian**  
+Run:  
+```bash
+sudo apt update
+sudo apt install screen -y
+```
+
+#### **2. Install `screen` on CentOS/RHEL**  
+Run:  
+```bash
+sudo yum install screen -y
+```
+
+#### **3. Install `screen` on Fedora**  
+Run:  
+```bash
+sudo dnf install screen -y
+```
+
+#### **4. Install `screen` on Arch Linux**  
+Run:  
+```bash
+sudo pacman -S screen
+```
+
+#### **5. Alternative: Use `minicom` Instead**  
+If `screen` is unavailable, you can use `minicom` as an alternative:  
+```bash
+sudo apt install minicom -y
+sudo minicom -D /dev/ttyUSB0 -b 115200
+```
+
+Once installed, you can try running:  
+```bash
+sudo screen /dev/ttyUSB0 115200
+```
+
+Let me know if you need further help! 🚀

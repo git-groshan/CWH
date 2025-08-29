@@ -1,0 +1,322 @@
+### **Lambda Functions in C++**
+Lambda functions in C++ are **anonymous (unnamed) functions** that you can define inline, typically for short-lived usage. They were introduced in **C++11** and are useful for concise function definitions, especially in **STL algorithms, multithreading, and functional programming**.
+
+---
+
+## **Syntax of a Lambda Function**
+```cpp
+[ capture ] ( parameters ) -> return_type { function_body };
+```
+
+### **Components:**
+1. **Capture List (`[]`)** – Defines how external variables are captured.
+2. **Parameter List (`()`)** – Function arguments (like normal functions).
+3. **Return Type (`-> return_type`)** – (Optional) Specifies return type.
+4. **Function Body (`{}`)** – Contains the actual code.
+
+---
+
+## **Basic Example**
+```cpp
+#include <iostream>
+
+int main() {
+    auto add = [](int a, int b) { return a + b; };
+    std::cout << "Sum: " << add(5, 3) << std::endl;
+}
+```
+### **Output:**
+```
+Sum: 8
+```
+Here, `add` is a lambda function that takes two integers and returns their sum.
+
+---
+
+## **Capturing Variables in Lambda**
+Lambdas can **capture** variables from the surrounding scope:
+
+### **1. Capture by Value (`[=]` or `[var]`)**
+- Copies the variable, so changes inside the lambda **don’t** affect the original.
+```cpp
+#include <iostream>
+
+int main() {
+    int x = 10;
+    auto lambda = [x]() { std::cout << "Value: " << x << std::endl; };
+    lambda();
+}
+```
+
+### **2. Capture by Reference (`[&]` or `[&var]`)**
+- Allows modifying the captured variable.
+```cpp
+int main() {
+    int x = 10;
+    auto lambda = [&x]() { x++; };
+    lambda();
+    std::cout << "Modified x: " << x << std::endl;
+}
+```
+### **Output:**
+```
+Modified x: 11
+```
+
+### **3. Mixed Capture (`[=, &var]`)**
+- Capture everything by value except specific variables by reference.
+```cpp
+int main() {
+    int x = 10, y = 20;
+    auto lambda = [=, &y]() { y++; std::cout << "x: " << x << ", y: " << y << std::endl; };
+    lambda();
+}
+```
+
+---
+
+## **Specifying Return Type**
+If the return type isn't automatically deduced:
+```cpp
+auto multiply = [](int a, int b) -> double { return a * b * 1.5; };
+```
+
+---
+
+## **Using Lambdas in STL Algorithms**
+Lambdas are often used with **`std::for_each`**, **`std::sort`**, etc.
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+    std::vector<int> vec = {5, 2, 8, 1};
+
+    // Sorting using lambda
+    std::sort(vec.begin(), vec.end(), [](int a, int b) { return a < b; });
+
+    // Print using lambda
+    std::for_each(vec.begin(), vec.end(), [](int x) { std::cout << x << " "; });
+}
+```
+### **Output:**
+```
+1 2 5 8
+```
+
+---
+
+## **Lambda with `std::thread`**
+```cpp
+#include <iostream>
+#include <thread>
+
+int main() {
+    std::thread t([]() { std::cout << "Hello from thread!\n"; });
+    t.join();
+}
+```
+
+---
+
+## **Mutable Lambda (Modifying Captured Values)**
+If capturing by **value**, use `mutable` to modify copies:
+```cpp
+int main() {
+    int x = 5;
+    auto lambda = [x]() mutable { x += 10; std::cout << x; };
+    lambda(); // Prints 15, but x in main() is still 5
+}
+```
+
+---
+
+## **Conclusion**
+Lambda functions provide **concise syntax** for writing short functions, especially useful for **STL algorithms, threading, and event handling**. They improve **readability** and **reduce boilerplate code**.
+
+Would you like an example specific to your project (5G RAN, DPDK, etc.)? 🚀
+
+
+Since you're working with **5G RAN, DPDK, EGTP-U, and multi-threading**, here are some **C++ lambda examples** relevant to your project:
+
+---
+
+## **1. Using Lambda for Packet Processing (DPDK)**
+When processing packets in DPDK, you often use `rte_ring`, `rte_mbuf`, or similar structures. A lambda function can be useful for iterating over packets efficiently.
+
+```cpp
+#include <rte_mbuf.h>
+#include <iostream>
+#include <vector>
+
+void process_packets(std::vector<rte_mbuf*>& packets) {
+    auto process = [](rte_mbuf* mbuf) {
+        if (!mbuf) return;
+        uint8_t* data = rte_pktmbuf_mtod(mbuf, uint8_t*);
+        std::cout << "Processing packet with length: " << mbuf->pkt_len << std::endl;
+    };
+
+    for (auto& pkt : packets) {
+        process(pkt);
+    }
+}
+
+int main() {
+    std::vector<rte_mbuf*> packets(10, nullptr); // Simulated packets
+    process_packets(packets);
+}
+```
+### **Why Use Lambda?**
+- Keeps logic **inline and readable**.
+- Avoids writing a separate function for a **simple one-time operation**.
+- Useful when combined with **STL algorithms**.
+
+---
+
+## **2. Multi-Threaded EGTP-U Packet Handling**
+If you're processing **EGTP-U packets** in a multi-threaded environment, a lambda can be used to launch worker threads efficiently.
+
+```cpp
+#include <iostream>
+#include <thread>
+#include <vector>
+
+void process_egtp_packet(int packet_id) {
+    std::cout << "Processing EGTP-U Packet: " << packet_id << " in thread: " << std::this_thread::get_id() << std::endl;
+}
+
+int main() {
+    std::vector<std::thread> workers;
+
+    for (int i = 0; i < 5; i++) {
+        workers.emplace_back([i]() {
+            process_egtp_packet(i);
+        });
+    }
+
+    for (auto& t : workers) {
+        t.join();
+    }
+}
+```
+### **Why Use Lambda?**
+- Easily **launches multiple threads** without writing extra functions.
+- Keeps thread logic **compact** and inside the loop.
+- Avoids boilerplate code for simple tasks.
+
+---
+
+## **3. Filtering 5G NGAP Messages in Wireshark Capture**
+If you’re analyzing **Wireshark NGAP traces** and want to filter messages based on type:
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+struct NGAPMessage {
+    int id;
+    std::string type;
+};
+
+// Lambda to filter NGAP messages of type "InitialContextSetup"
+auto filter_initial_context_setup = [](const NGAPMessage& msg) {
+    return msg.type == "InitialContextSetup";
+};
+
+int main() {
+    std::vector<NGAPMessage> messages = {
+        {1, "InitialContextSetup"},
+        {2, "UEContextRelease"},
+        {3, "PDUSessionResourceSetup"},
+        {4, "InitialContextSetup"}
+    };
+
+    std::vector<NGAPMessage> filtered;
+    std::copy_if(messages.begin(), messages.end(), std::back_inserter(filtered), filter_initial_context_setup);
+
+    for (const auto& msg : filtered) {
+        std::cout << "Filtered NGAP Message: ID=" << msg.id << ", Type=" << msg.type << std::endl;
+    }
+}
+```
+### **Why Use Lambda?**
+- Allows **inline filtering** based on message type.
+- **Reusable** and **cleaner** than defining a separate function.
+
+---
+
+## **4. Parallel Processing of UL Packets**
+If you’re handling **uplink traffic** in a RAN component, you may want to process multiple **PRBs (Physical Resource Blocks)** in parallel.
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <thread>
+
+void process_prb(int prb_id) {
+    std::cout << "Processing PRB: " << prb_id << " in thread: " << std::this_thread::get_id() << std::endl;
+}
+
+int main() {
+    int num_prbs = 10;
+    std::vector<std::thread> threads;
+
+    for (int i = 0; i < num_prbs; i++) {
+        threads.emplace_back([i]() { process_prb(i); });
+    }
+
+    for (auto& t : threads) {
+        t.join();
+    }
+}
+```
+### **Why Use Lambda?**
+- Dynamically **assigns PRBs to threads** for parallel processing.
+- Keeps **code compact and easy to maintain**.
+- Prevents **race conditions** by not using shared variables inside the lambda.
+
+---
+
+## **5. Modifying XML Node Values (NRCellCU)**
+You mentioned **modifying `<NRCellCU>` elements** in XML. A lambda can be used with **tinyxml2** for this task.
+
+```cpp
+#include <iostream>
+#include <tinyxml2.h>
+
+using namespace tinyxml2;
+
+int main() {
+    XMLDocument doc;
+    doc.LoadFile("config.xml");
+
+    auto modify_cells = [](XMLElement* root) {
+        int id = 0;
+        for (XMLElement* cell = root->FirstChildElement("NRCellCU"); cell; cell = cell->NextSiblingElement("NRCellCU")) {
+            cell->SetAttribute("id", id++);
+        }
+    };
+
+    XMLElement* root = doc.FirstChildElement("Network");
+    if (root) {
+        modify_cells(root);
+        doc.SaveFile("config_modified.xml");
+    }
+}
+```
+### **Why Use Lambda?**
+- Encapsulates the logic for **iterating and modifying XML nodes**.
+- Makes the XML update operation **reusable and readable**.
+
+---
+
+### **Conclusion**
+Lambda functions help in:
+✅ **Packet processing** (DPDK, EGTP-U)  
+✅ **Multi-threading** (Parallel UL/PRB handling)  
+✅ **Filtering and searching** (Wireshark NGAP messages)  
+✅ **Modifying XML configuration files**  
+
+Let me know if you need a **customized example** for a specific issue in your project! 🚀

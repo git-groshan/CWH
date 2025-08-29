@@ -224,6 +224,141 @@ $ docker build -t my-app:version-1.0 <Dockefile path>
 
 
 
+############### Docker Registry/Directory  ##########
+- Docker Registry is a cloud directory where we store our docker images 
+- On AWS, we create directory for each image and stores the different version of it in that directort
+- On other web services, we can push everything inside one folder 
+- to push your image first login to private repo 
+1.docker login 
+2.build the image 
+3.tag the image or image naming 
+4.push the image  docker push 
+
+Image Naming in Docker registeries 
+- registryDomain/imageName:tag
+In DockerHub 
+  - docker pull mongo:4.2 is a shorthand cmd for docker pull docker.io/library/mongo:4.2 
+In AWS ECR:
+- docker pull <full registryDomain of repo>/image:tag 
+- docker push my-app:1.0  --> default it will  be pushed to docker hub 
+- docker tag my-app:latest  6654327402862.dkr.ecr.eu-central-1.amazonaws.com/my-app:latest 
+docker tag = rename the image 
+
+Here above we are renaming our docker reso hostesd on AWS server using tag 
+- we can use this tag to take pull from aws not docker hub 
+
+- docker push 654327402862.dkr.ecr.eu-central-1.amazonaws.com/my-app:latest 
+
+##### made some changes in app rebuild and push it again 
+
+- docker build -t my-app:1.1 . 
+- docker tag my-app:1.1 654327402862.dkr.ecr.eu-central-1.amazonaws.com/my-app:1.1 
+- docker images 
+- docker push 654327402862.dkr.ecr.eu-central-1.amazonaws.com/my-app:1.1
+
+## 1 docker repo can have 1000 version of images 
+
+## docker login is done only once 
+
+
+
+######## Deploying the Application ###########
+Topics 
+- Image from a private repo 
+- Deploy multiple containers 
+- Deployment Server 
+
+# The Development Server needs to login  to pull from private repository. 
+# Logion not needed for Docker Hub 
+# Docker-Compose file would be used on the server to deploy all the appliactions/services 
+
+
+-docker login <url to docker repository> 
+-vim mongo.yaml 
+- docker-compose -f mongo.yaml up 
+
+
+
+
+################# Docker Volumes #############
+Topics - 
+1. Why do we need docker volume?
+- used for data persitant. since container run inside the host machine which has it's own file system.So when we restart or removing the container the data is gone. So there is no persitant. 
+- 
+2. What is docker Volumes ?
+- On Host , It has physical file system .In docker volume the virtual file system of container is plugges with the physical file system of the Host.
+- folder in physical host file system is mounted into the virtual file system of Docker. 
+- Data gets automatically replicated. when an container writes to its file system, it gets replicated or automatically written on the host file system and vice-versa 
+- so when an container starts from the fresh state the data is automatically picked up from the host. 
+
+
+3. 3 Volume types 
+There are different ways to create docker volume hence differen types of docker volume 
+1.) Host Volume using docker run command 
+ docker run -v  <host directory> : <container directiory> 
+- docker run -v /home/mount/data:/var/libs/mysql/data 
+- We decide where on the host file system the reference is made. 
+
+2. Create volume just by referencing the container directorty or Anonymous Volume 
+- docker run -v /var/lib/mysql/data 
+- jis host directory pr mount krna hai woh docker take care kr leta hai 
+- for each container a folder is generated that gets mounted 
+- This kind of volume is called Anonymouse Volume
+- In this we don't know exactly where is the reference to host file
+
+3. Create volume using the container name but also reference the naming to which host file system it will reference or NAMED Volumes
+
+- docker run -v name:/var/lib/mysql/data 
+- you can reference the volume by name 
+- should be used in production 
+
+
+Docker Volume in docker-compose 
+
+version '3'
+services:
+  mongodb:
+    image:mongo
+    ports:
+    -27017:270178
+    volumes:
+    - db-data:/var/lib/mysql/data
+  mongo-express
+    image: mongo-express 
+    ....
+volumes:
+  mongo-data:
+    drivers:local 
+    
+
+
+# You can actually mount the reference of the same folder on the host for to more than one  container
+
+
+
+
+
+
+
+
+4. Docker Volume in docker-compose file 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  

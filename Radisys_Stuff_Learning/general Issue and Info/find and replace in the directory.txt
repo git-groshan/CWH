@@ -1,0 +1,40 @@
+To **replace all instances of `COMMON_CNTRL` with `GNB_CNTRL`** in all files inside a directory, you can use the `sed` command in combination with `find`.
+
+---
+
+### ✅ Here's a safe and effective method:
+
+```bash
+find . -type f -exec sed -i 's/COMMON_CNTRL/GNB_CNTRL/g' {} +
+```
+
+---
+
+### 🔍 Explanation:
+
+- `find . -type f`: Finds all files recursively from the current directory (`.`).
+- `-exec ... {} +`: Runs the `sed` command on each file.
+- `sed -i 's/COMMON_CNTRL/GNB_CNTRL/g'`: Replaces all occurrences in-place (`-i`):
+  - `s/.../.../g` → substitute globally in the line.
+
+---
+
+### 📌 Optional: Preview changes before applying
+
+If you want to **see which files will be affected**, use `grep` first:
+
+```bash
+grep -rl 'COMMON_CNTRL' .
+```
+
+Or **make a backup while replacing**:
+
+```bash
+find . -type f -exec sed -i.bak 's/COMMON_CNTRL/GNB_CNTRL/g' {} +
+```
+
+This creates a `.bak` backup of each modified file.
+
+---
+
+Let me know if you want to exclude certain file types (like `.log`, `.bin`) or search only in code files like `.c`, `.h`, `.cpp`.

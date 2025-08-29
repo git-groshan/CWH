@@ -1,0 +1,71 @@
+In **5G NR (New Radio)**, the communication between **RM (Resource Manager)** and **UE_CONN_MGR (UE Connection Manager)** is critical for handling user equipment (UE) connections, resource allocation, and mobility management. The exact implementation depends on the **vendor-specific architecture**, but in a typical **5G RAN CU (Centralized Unit) implementation**, the communication between **RM and UE_CONN_MGR** happens via **message passing and internal APIs**.
+
+---
+
+## **1. RM (Resource Manager)**
+- The **Resource Manager (RM)** is responsible for allocating, managing, and optimizing radio resources.
+- It interacts with **UE_CONN_MGR** to provide necessary resources for UE connection setup, scheduling, and handover.
+
+## **2. UE_CONN_MGR (UE Connection Manager)**
+- The **UE Connection Manager** handles **UE context management**, **RRC connection handling**, **security procedures**, and **NAS signaling**.
+- It communicates with **RM** to request or release radio resources.
+
+---
+
+## **3. Communication Flow Between RM and UE_CONN_MGR**
+The **communication** typically follows an **event-driven approach** where **UE_CONN_MGR** and **RM** exchange messages or API calls.
+
+### **(a) UE Connection Setup**
+1. **UE_CONN_MGR receives Initial UE Message** from **gNB-DU** (via F1AP).
+2. It processes the RRC Setup Request and signals to **RM** to allocate radio resources.
+3. **RM allocates PRBs (Physical Resource Blocks) & Scheduling grants** and informs **UE_CONN_MGR**.
+4. **UE_CONN_MGR proceeds with the RRC Connection Setup** and continues the NAS signaling.
+
+### **(b) UE Resource Modification**
+1. If the **QoS (Quality of Service) changes**, **UE_CONN_MGR** requests RM for resource modification.
+2. **RM evaluates the available resources** and provides updated resource allocation.
+3. **UE_CONN_MGR applies the new resource configuration** and updates the UE context.
+
+### **(c) Handover / Mobility**
+1. **UE_CONN_MGR detects mobility** based on measurement reports from the UE.
+2. It requests **RM** for handover resource allocation.
+3. **RM identifies target cell resources** and **allocates them**.
+4. Once handover is completed, **RM releases old resources**.
+
+### **(d) UE Release**
+1. If the UE becomes inactive or is released, **UE_CONN_MGR requests RM to free resources**.
+2. **RM deallocates radio resources** and updates the system state.
+
+---
+
+## **4. Message Exchange Mechanism**
+The interaction between **RM and UE_CONN_MGR** happens via:
+- **Inter-thread communication (Message Queues, Shared Memory, or Event-based IPC)**
+- **Internal function calls (if both modules exist within the same process)**
+- **Custom APIs (for structured interaction between modules)**
+- **gNB implementation-specific frameworks (e.g., in Radisys or other vendor-specific CU implementations)**
+
+---
+
+## **5. Example: API Calls Between RM and UE_CONN_MGR**
+Example function prototypes for RM and UE_CONN_MGR communication:
+
+```c
+// UE_CONN_MGR requests resource allocation
+void requestResourceAllocation(uint32_t ue_id, uint32_t required_prbs);
+
+// RM allocates resources and responds
+void allocateResources(uint32_t ue_id, uint32_t allocated_prbs);
+
+// UE_CONN_MGR initiates UE release
+void releaseUE(uint32_t ue_id);
+```
+
+---
+
+### **Conclusion**
+- **UE_CONN_MGR** and **RM** communicate using **internal APIs and message queues**.
+- Communication is **event-driven**, triggered by UE actions like attach, handover, or resource modification.
+- The exact implementation depends on **vendor architecture** but follows **standard 5G RAN principles**.
+
+If

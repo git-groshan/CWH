@@ -1,0 +1,181 @@
+Perfect 👍 you want a **deep dive into GDB** with commands and their usage.
+Let me build you a structured **GDB Command Reference (Cheat Sheet)** that covers:
+
+* **Program control** (run/continue/step)
+* **Breakpoints/watchpoints**
+* **Inspection** (variables, memory, stack)
+* **Windows/TUI**
+* **Advanced debugging**
+
+---
+
+# 🐞 **GDB In-Depth Command Guide**
+
+---
+
+## 🔹 1. Starting GDB
+
+```bash
+gdb ./program              # start with binary
+gdb -tui ./program         # start with TUI (source window)
+gdb ./program core         # debug with core dump
+gdb --args ./program arg1 arg2   # pass args
+```
+
+---
+
+## 🔹 2. Running & Controlling Execution
+
+| Command            | Meaning                                                 |
+| ------------------ | ------------------------------------------------------- |
+| `run [args]` / `r` | Run program with optional arguments                     |
+| `start`            | Run until `main()`                                      |
+| `continue` / `c`   | Resume execution until next breakpoint                  |
+| `step` / `s`       | Step into (executes one line, enters functions)         |
+| `next` / `n`       | Step over (executes one line, skips into function body) |
+| `finish`           | Run until current function returns                      |
+| `until`            | Run until current loop/function ends                    |
+| `kill`             | Stop the program                                        |
+| `quit` / `q`       | Exit GDB                                                |
+
+---
+
+## 🔹 3. Breakpoints & Watchpoints
+
+| Command                 | Meaning                            |
+| ----------------------- | ---------------------------------- |
+| `break main` / `b main` | Break at function                  |
+| `break filename:line`   | Break at file\:line                |
+| `break *0xADDRESS`      | Break at memory address            |
+| `delete`                | Delete all breakpoints             |
+| `delete N`              | Delete breakpoint number N         |
+| `disable` / `enable`    | Disable/enable breakpoints         |
+| `info breakpoints`      | List breakpoints                   |
+| `watch VAR`             | Stop when variable changes         |
+| `rwatch VAR`            | Stop when variable is read         |
+| `awatch VAR`            | Stop when variable is read/written |
+| `condition N expr`      | Add condition to breakpoint N      |
+
+---
+
+## 🔹 4. Inspecting Program State
+
+| Command               | Meaning                                           |
+| --------------------- | ------------------------------------------------- |
+| `print VAR` / `p VAR` | Print variable value                              |
+| `print *ptr`          | Print value pointed by pointer                    |
+| `ptype VAR`           | Show type of variable                             |
+| `display VAR`         | Auto-print variable every step                    |
+| `undisplay N`         | Remove display N                                  |
+| `backtrace` / `bt`    | Show call stack                                   |
+| `frame N`             | Switch to stack frame N                           |
+| `info locals`         | Show local variables                              |
+| `info args`           | Show function arguments                           |
+| `info registers`      | Show CPU registers                                |
+| `set VAR = value`     | Change variable value at runtime                  |
+| `x/NFMT address`      | Examine memory (N=repeat count, F=format, T=size) |
+
+**Memory Exam Formats:**
+
+* Format: `x` (hex), `d` (decimal), `u` (unsigned), `c` (char), `s` (string), `i` (instruction)
+* Size: `b` (byte), `h` (halfword=2 bytes), `w` (word=4 bytes), `g` (giant=8 bytes)
+
+Example:
+
+```gdb
+x/16xb 0x601000     # examine 16 bytes in hex
+x/4i $pc            # show 4 assembly instructions at program counter
+```
+
+---
+
+## 🔹 5. Program Information
+
+| Command          | Meaning                          |
+| ---------------- | -------------------------------- |
+| `info functions` | List all functions               |
+| `info variables` | List global/static variables     |
+| `info locals`    | Local vars in current function   |
+| `info args`      | Arguments of current function    |
+| `info registers` | CPU registers                    |
+| `info files`     | Program info (symbols, sections) |
+| `info threads`   | List all threads                 |
+| `thread N`       | Switch to thread N               |
+
+---
+
+## 🔹 6. Multi-Thread Debugging
+
+| Command                 | Meaning                       |
+| ----------------------- | ----------------------------- |
+| `info threads`          | Show thread list              |
+| `thread N`              | Switch to thread N            |
+| `break FUNC thread all` | Break on FUNC for all threads |
+| `thread apply all bt`   | Backtrace for all threads     |
+
+---
+
+## 🔹 7. Signals & Core Dumps
+
+| Command                | Meaning                    |
+| ---------------------- | -------------------------- |
+| `handle SIGINT ignore` | Ignore SIGINT              |
+| `handle SIGSEGV stop`  | Stop on segmentation fault |
+| `core-file core`       | Load core dump             |
+
+---
+
+## 🔹 8. TUI (Windows Mode)
+
+| Command                      | Meaning                 |
+| ---------------------------- | ----------------------- |
+| `tui enable` / `tui disable` | Enable/disable TUI mode |
+| `layout src`                 | Source window           |
+| `layout asm`                 | Assembly window         |
+| `layout regs`                | Register window         |
+| `layout split`               | Source + Assembly       |
+| `layout next`                | Cycle layouts           |
+| `winheight src 20`           | Resize source window    |
+| `Ctrl + x a`                 | Toggle TUI              |
+| `Ctrl + x o`                 | Switch window focus     |
+
+---
+
+## 🔹 9. Scripting & Automation
+
+| Command              | Meaning                              |
+| -------------------- | ------------------------------------ |
+| `define foo` … `end` | Define custom command                |
+| `source file.gdb`    | Run GDB script file                  |
+| `commands N` … `end` | Attach commands to breakpoint N      |
+| `define hook-stop`   | Auto-run commands when program stops |
+
+---
+
+## 🔹 10. Shortcuts & Aliases
+
+| Command | Meaning                       |
+| ------- | ----------------------------- |
+| `bt`    | = `backtrace`                 |
+| `c`     | = `continue`                  |
+| `n`     | = `next`                      |
+| `s`     | = `step`                      |
+| `fin`   | = `finish`                    |
+| `q`     | = `quit`                      |
+| `r`     | = `run`                       |
+| `p`     | = `print`                     |
+| `w`     | = `where` (same as backtrace) |
+
+---
+
+✅ **Summary:**
+
+* Use **`run/step/next/continue`** for control.
+* Use **`break/watch/info`** for stopping.
+* Use **`print/x/info`** for inspection.
+* Use **`layout`/`tui`/`winheight`** for windows.
+* Use **scripts/hooks** for automation.
+
+---
+
+👉 Do you want me to prepare a **ready-to-print PDF cheat sheet** of all these GDB commands (grouped nicely) so you can keep it handy while debugging?

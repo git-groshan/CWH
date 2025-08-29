@@ -1,0 +1,105 @@
+The errors indicate a **DNS resolution issue**, preventing your NXP board from accessing the internet and downloading packages.  
+
+---
+
+### **🔍 How to Fix This Issue?**  
+
+#### **1️⃣ Check Internet Connectivity**  
+Run the following command:  
+```bash
+ping -c 4 8.8.8.8
+```
+- If you **get replies**, your internet is working, but DNS is failing.  
+- If you **don't get replies**, check your network settings.  
+
+---
+
+#### **2️⃣ Check DNS Resolution**  
+Run:  
+```bash
+ping -c 4 google.com
+```
+- If this **fails**, your board is not resolving domain names.  
+- If this **works**, DNS is fine, and the issue is elsewhere.  
+
+---
+
+#### **3️⃣ Fix DNS Configuration**  
+Manually update your DNS by editing the **resolv.conf** file:  
+```bash
+sudo nano /etc/resolv.conf
+```
+Add the following lines:  
+```
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+```
+Save and exit (CTRL+X, then Y, then Enter).  
+
+Restart networking:  
+```bash
+sudo systemctl restart networking
+```
+OR  
+```bash
+sudo systemctl restart systemd-resolved
+```
+
+Now try running:  
+```bash
+ping google.com
+```
+
+---
+
+#### **4️⃣ Restart Network Services**  
+```bash
+sudo systemctl restart networking
+sudo systemctl restart systemd-resolved
+```
+Then try updating again:  
+```bash
+sudo apt update
+```
+
+---
+
+#### **5️⃣ Check `/etc/hosts` File**  
+Ensure your `/etc/hosts` file contains valid entries:  
+```bash
+cat /etc/hosts
+```
+If necessary, add:  
+```
+127.0.0.1 localhost
+```
+Save the file and try again.
+
+---
+
+#### **6️⃣ Use Direct IP Instead of Hostnames**  
+Try fetching a package manually using an IP instead of a domain:  
+```bash
+wget http://91.189.91.38/ubuntu/pool/main/s/screen/screen_4.6.2-1ubuntu1.1_arm64.deb
+```
+If this works, DNS is the issue.
+
+---
+
+#### **7️⃣ Reboot and Retry**  
+```bash
+sudo reboot
+```
+After reboot, try again:  
+```bash
+sudo apt update && sudo apt install screen -y
+```
+
+---
+
+### **🚀 Summary**  
+✅ **If Internet works but DNS fails:** Update `/etc/resolv.conf` with `8.8.8.8`.  
+✅ **If No Internet:** Check network settings, restart `networking` and `systemd-resolved`.  
+✅ **If DNS issue persists:** Manually add DNS servers, restart services.  
+
+Try these steps and let me know what works! 🔧💡

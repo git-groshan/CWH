@@ -1,0 +1,62 @@
+The error you're seeing:
+
+```
+fatal: unable to access 'https://github.com/protocolbuffers/protobuf/': server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+```
+
+means **Git cannot verify GitHub's SSL certificate**, usually due to missing or outdated CA certificates on your system.
+
+---
+
+### ✅ Fixes:
+
+#### 1. **Update CA Certificates (Recommended)**
+
+On **Ubuntu/Debian**:
+
+```bash
+sudo apt update
+sudo apt install --reinstall ca-certificates
+sudo update-ca-certificates
+```
+
+On **CentOS/RHEL**:
+
+```bash
+sudo yum reinstall ca-certificates
+sudo update-ca-trust force-enable
+```
+
+---
+
+#### 2. **Check Date and Time**
+If your system clock is wrong, certificate validation will fail.
+
+Check and set it:
+
+```bash
+date
+sudo timedatectl set-ntp true  # enable NTP to sync time
+```
+
+---
+
+#### 3. **(Temporary) Disable SSL Verification in Git**  
+⚠️ **Not recommended** for security reasons.
+
+```bash
+git config --global http.sslVerify false
+```
+
+Use this only to unblock yourself temporarily, and re-enable it afterward:
+
+```bash
+git config --global http.sslVerify true
+```
+
+---
+
+### 🔒 Best Practice:
+Always keep CA certificates and system time up-to-date for secure Git operations.
+
+Would you like help checking your current CA or Git config settings?

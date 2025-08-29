@@ -1,0 +1,88 @@
+The **RACH RAR procedure** is a **critical early step** in the **UE (User Equipment) attach process** in LTE/5G\*\*, used for **random access** when a UE wants to connect to the network — either for the first time or after being idle.
+
+Let’s break it down clearly:
+
+---
+
+## 📶 What is RACH?
+
+**RACH** = Random Access CHannel
+It allows the UE to request uplink resources from the network when:
+
+* It's **powering on**
+* It's **out of sync**
+* It's **recovering from radio link failure**
+* It wants to **access the network for attach**
+
+---
+
+## 🧱 RACH Procedure Overview
+
+The RACH procedure is **4-step handshake** between UE and gNB/eNB:
+
+| Step | Message                                | Purpose                                               |
+| ---- | -------------------------------------- | ----------------------------------------------------- |
+| 1️⃣  | **Msg1: PRACH (Preamble)**             | UE sends a random preamble (ID)                       |
+| 2️⃣  | **Msg2: RAR (Random Access Response)** | Network responds with timing advance and temporary ID |
+| 3️⃣  | **Msg3: RRC Connection Request**       | UE sends actual identity or request                   |
+| 4️⃣  | **Msg4: RRC Connection Setup**         | Network confirms, assigns resources                   |
+
+---
+
+## 🔍 Focus: What is **RAR** (Random Access Response)?
+
+### 📤 UE Sends:
+
+* **PRACH preamble** (randomly selected)
+* No scheduling, just fire-and-wait
+
+### 📥 eNB/gNB Sends:
+
+* **RAR** = Random Access Response (within a RAR window)
+* RAR contains:
+
+  * **Timing Advance Command**
+  * **Temporary C-RNTI**
+  * **UL Grant** (Uplink resource grant)
+  * **RAR Identifier (RA-RNTI)**
+
+---
+
+## 🎯 Purpose of RAR
+
+1. **Synchronize timing** between UE and gNB
+2. Assign a **temporary identifier** (C-RNTI)
+3. Allocate **uplink resource** for the UE to send its actual request (Msg3)
+
+---
+
+## 🚀 Then What?
+
+After RAR, UE sends **Msg3 (RRC Connection Request)** using the grant from RAR.
+
+If collision happened (2 UEs sent same preamble), eNB detects it and may:
+
+* Reject one
+* Or trigger Contention Resolution
+
+---
+
+## 📘 In UE Attach Procedure:
+
+* RACH + RAR happen **before** the UE can send RRC messages like **Attach Request**
+* It's the first step in establishing communication on the **Physical layer and MAC**
+
+---
+
+## 🧠 Summary
+
+| Term       | Meaning                                                                  |
+| ---------- | ------------------------------------------------------------------------ |
+| RACH       | Random Access Channel — used for initial access                          |
+| RAR        | Random Access Response — sent by gNB/eNB in reply to UE's PRACH preamble |
+| Msg1–4     | 4-step RACH handshake to get sync and uplink access                      |
+| Importance | Without RAR, UE can't proceed to RRC attach and identity exchange        |
+
+---
+
+Let me know if you want a flow diagram, logs from real captures (like with Wireshark), or how RAR works in **5G NR** vs. **LTE**.

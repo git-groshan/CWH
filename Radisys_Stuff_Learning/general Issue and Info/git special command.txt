@@ -1,0 +1,198 @@
+Here are some **interesting and useful Git commands** beyond the basics:
+
+---
+
+### 🔍 **1. View Differences with External Tool**  
+```sh
+git difftool
+```
+- Uses an external diff tool like `vimdiff`, `meld`, or `kdiff3` to compare changes.  
+- If not set, configure it:
+  ```sh
+  git config --global diff.tool vimdiff
+  git config --global difftool.prompt false
+  ```
+
+---
+
+### ⏪ **2. Undo the Last Commit (Keep Changes in Staging Area)**  
+```sh
+git reset --soft HEAD~1
+```
+- Removes the last commit but **keeps the changes staged**.
+
+---
+
+### 🔄 **3. Undo the Last Commit (Discard Staged Changes)**  
+```sh
+git reset --mixed HEAD~1
+```
+- Removes the last commit and **unstages changes** but **keeps them in the working directory**.
+
+---
+
+### ❌ **4. Completely Delete the Last Commit (Dangerous!)**  
+```sh
+git reset --hard HEAD~1
+```
+- Removes the last commit **and all changes** in it.
+
+---
+
+### 🕵️‍♂️ **5. Find the Commit that Introduced a Bug (Binary Search)**  
+```sh
+git bisect start
+git bisect bad HEAD  # Mark the current version as bad
+git bisect good <commit-hash>  # Mark an older working commit as good
+```
+- Git will help you **find the exact commit** that introduced a bug.
+
+---
+
+### 🎭 **6. See Who Modified a Specific Line of Code (Blame Feature)**  
+```sh
+git blame -L 45,50 filename.c
+```
+- Shows **who modified lines 45 to 50** in `filename.c`.
+
+---
+
+### 🕒 **7. Show Changes in the Last 2 Commits**  
+```sh
+git show HEAD~1
+git show HEAD~2
+```
+- Displays changes in the previous commits.
+
+---
+
+### 🌎 **8. Clone Only a Specific Directory from a Large Repo**  
+```sh
+git clone --depth 1 --filter=blob:none --sparse https://repo-url.git
+cd repo-name
+git sparse-checkout set path/to/directory
+```
+- Saves time & space by **cloning only the required directory**.
+
+---
+
+### 🔍 **9. View Changes in a File Between Two Commits**  
+```sh
+git diff <commit1> <commit2> -- filename
+```
+- Shows differences for a **specific file** between two commits.
+
+---
+
+### 🚀 **10. Push Only a Specific Commit to Remote**  
+```sh
+git push origin <commit-hash>:<branch-name>
+```
+- Useful if you want to push **one specific commit** instead of the entire branch.
+
+---
+
+### 🎭 **11. Stash Uncommitted Changes and Apply Later**  
+```sh
+git stash
+git stash list
+git stash pop  # Apply the last stashed changes
+```
+- Temporarily **saves your changes** without committing.
+
+---
+
+### 🛠 **12. View the Log as a Graph**  
+```sh
+git log --oneline --graph --all --decorate
+```
+- Shows a **nice visual representation** of the Git history.
+
+---
+
+### 🎭 **13. Cherry-Pick a Specific Commit**  
+```sh
+git cherry-pick <commit-hash>
+```
+- Apply a **single commit** from another branch without merging the entire branch.
+
+---
+
+### 🔁 **14. Revert a Specific Commit (Without Removing History)**  
+```sh
+git revert <commit-hash>
+```
+- Creates a **new commit** that undoes the changes from a previous commit.
+
+---
+
+### 🏷 **15. Show All Tags and Checkout a Specific One**  
+```sh
+git tag
+git checkout tags/<tag-name>
+```
+- Useful for **checking out older releases**.
+
+---
+
+Would you like any specific **Git trick** in detail? 🚀
+
+
+To **quickly push** changes to any Git branch, you can use the following commands:
+
+---
+
+### 🚀 **1. Fast Push to the Current Branch**
+```sh
+git push -u origin HEAD
+```
+- This automatically **pushes to the tracking branch** without typing the branch name.
+
+---
+
+### 🔄 **2. Fast Push with Force (Use with Caution!)**
+```sh
+git push --force
+```
+or  
+```sh
+git push -f
+```
+- **Forces the push**, overriding the remote branch.  
+- Be careful! This can **overwrite commits** for others.
+
+---
+
+### ⚡ **3. Push to a Different Branch Without Switching**
+```sh
+git push origin main
+```
+- Pushes changes **to `main`** even if you're on a different branch.
+
+---
+
+### 🏎 **4. Push a Specific Commit Without Switching Branches**
+```sh
+git push origin <commit-hash>:<branch-name>
+```
+- Useful for pushing **one commit** without pushing everything.
+
+---
+
+### 🔄 **5. Push and Set Upstream in One Command**
+```sh
+git push -u origin my-feature-branch
+```
+- Pushes **and sets the remote tracking branch**, so you can later just do `git push`.
+
+---
+
+### ⚡ **6. Push All Local Branches at Once**
+```sh
+git push --all origin
+```
+- Pushes **all local branches** to the remote.
+
+---
+
+Would you like a **shortcut alias** for even faster Git pushing? 🚀

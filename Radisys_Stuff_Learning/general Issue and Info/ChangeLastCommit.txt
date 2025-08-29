@@ -1,0 +1,31 @@
+To delete the last commit locally in Git, you can use one of the following methods depending on your needs:
+
+### **1️⃣ Undo Last Commit but Keep Changes (Soft Reset)**
+```bash
+git reset --soft HEAD~1
+```
+- This **removes the last commit** but **keeps all your changes staged**.
+- Useful if you want to modify the commit before recommitting.
+
+### **2️⃣ Undo Last Commit and Unstage Changes (Mixed Reset)**
+```bash
+git reset --mixed HEAD~1
+```
+- This removes the last commit and **unstages the changes**.
+- Your changes will still be available in your working directory.
+
+### **3️⃣ Undo Last Commit and Discard Changes (Hard Reset)**
+```bash
+git reset --hard HEAD~1
+```
+⚠ **Warning:** This will **permanently delete** the last commit and all changes.
+
+### **4️⃣ If the Commit is Already Pushed (Force Push)**
+If you've already pushed the commit and want to delete it from the remote:
+```bash
+git reset --hard HEAD~1
+git push origin --force
+```
+⚠ **Warning:** **Force push** can rewrite history and affect your team. Be careful when using it!
+
+Let me know if you need more details! 🚀

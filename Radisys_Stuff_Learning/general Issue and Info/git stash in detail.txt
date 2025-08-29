@@ -1,0 +1,154 @@
+### 📌 **Git Stash: Everything You Need to Know**  
+
+Git `stash` is a powerful command that temporarily saves your **uncommitted changes** without committing them, so you can work on something else and come back later.
+
+---
+
+## 🚀 **1. Basic Usage**
+### **Stash Uncommitted Changes**
+```sh
+git stash
+```
+- Stores all **modified and staged** files in a temporary storage (stash stack).
+- Leaves your working directory **clean** (like you just cloned the repo).
+- **Untracked and ignored files are NOT stashed.**
+
+---
+
+## 🔄 **2. Viewing Stashes**
+### **Check Stashed Changes**
+```sh
+git stash list
+```
+- Shows a list of saved stashes.
+- Example output:
+  ```
+  stash@{0}: WIP on main: e3b0c44 initial commit
+  stash@{1}: WIP on feature-branch: f4a9b12 added login feature
+  ```
+
+### **See What's Inside a Stash**
+```sh
+git stash show -p stash@{0}
+```
+- Displays a **diff** of changes stored in a specific stash.
+
+---
+
+## 🛠 **3. Applying Stashed Changes**
+### **Apply the Most Recent Stash**
+```sh
+git stash apply
+```
+- Applies the latest stash but **keeps it in the stash list**.
+
+### **Apply and Remove Stash**
+```sh
+git stash pop
+```
+- Applies the latest stash and **removes it from the stash list**.
+
+### **Apply a Specific Stash**
+```sh
+git stash apply stash@{1}
+```
+- Applies a particular stash without removing it.
+
+---
+
+## ❌ **4. Removing Stashes**
+### **Delete the Most Recent Stash**
+```sh
+git stash drop
+```
+- Removes the latest stash without applying it.
+
+### **Delete a Specific Stash**
+```sh
+git stash drop stash@{2}
+```
+- Deletes a specific stash.
+
+### **Clear All Stashes**
+```sh
+git stash clear
+```
+- **WARNING:** This **deletes all stashes permanently**.
+
+---
+
+## 📌 **5. Stashing Untracked & Ignored Files**
+### **Stash Untracked Files**
+```sh
+git stash -u
+```
+or  
+```sh
+git stash --include-untracked
+```
+- Stashes both **tracked and untracked** files.
+
+### **Stash Ignored Files Too**
+```sh
+git stash -a
+```
+or  
+```sh
+git stash --all
+```
+- Stashes **everything**, including ignored files.
+
+---
+
+## ✏️ **6. Naming Stashes for Better Tracking**
+```sh
+git stash push -m "Fixing login issue"
+```
+- Stores the stash with a **custom message** for easier identification.
+
+### **View Stash with Messages**
+```sh
+git stash list
+```
+- Example output:
+  ```
+  stash@{0}: On main: Fixing login issue
+  stash@{1}: On dev: WIP feature update
+  ```
+
+---
+
+## 🔄 **7. Stashing Only Specific Files**
+```sh
+git stash push -m "Partial stash" -- path/to/file.txt
+```
+- Stashes **only the specified file**, leaving others untouched.
+
+---
+
+## 🔁 **8. Create a New Branch from a Stash**
+```sh
+git stash branch new-branch-name stash@{0}
+```
+- Creates a new branch from a **stashed state**.
+
+---
+
+## 🛑 **When to Use Git Stash?**
+✔️ You need to **switch branches** but don’t want to commit yet.  
+✔️ You’re working on something but need to **pull updates** first.  
+✔️ You need to **test something quickly** without losing changes.  
+
+---
+
+## ❌ **When NOT to Use Git Stash?**
+❌ If changes are **important**, better commit them.  
+❌ If you're unsure about coming back to them later.  
+❌ If you need a proper **history of changes**.  
+
+---
+
+## 🏁 **Conclusion**
+Git stash is a **temporary save** for uncommitted changes. Use it when switching tasks but don’t want to commit yet. However, don’t forget to `pop` or `apply` stashes before they get lost!
+
+Would you like an alias for quick stash management? 🚀

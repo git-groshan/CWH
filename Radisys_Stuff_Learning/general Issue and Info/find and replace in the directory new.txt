@@ -1,0 +1,68 @@
+You can easily do this using the `find` and `sed` commands in Linux.
+
+Here’s the one-liner to **recursively search all `.cpp` and `.h` files** and replace all instances of `gnb_cho_candidate_cells_info` with `gnb_cho_roshan_candidate_cells_info`:
+
+```bash
+find . -type f \( -name "*.cpp" -o -name "*.h" \) -exec sed -i 's/gnb_cho_candidate_cells_info/gnb_cho_roshan_candidate_cells_info/g' {} +
+```
+
+### ✅ What this does:
+
+* `find . -type f \( -name "*.cpp" -o -name "*.h" \)`
+  — Finds all `.cpp` and `.h` files recursively.
+* `-exec sed -i 's/.../.../g' {}`
+  — Replaces the string **in place** in each file.
+* `g` at the end of `sed` means replace **all occurrences** in a line.
+
+---
+
+### 🔒 Optional: Backup before changing
+
+If you want to keep a backup of the original files (just in case), run:
+
+```bash
+find . -type f \( -name "*.cpp" -o -name "*.h" \) -exec sed -i.bak 's/gnb_cho_candidate_cells_info/gnb_cho_roshan_candidate_cells_info/g' {} +
+```
+
+This will create `.bak` files alongside the originals.
+
+Let me know if you want to limit it to specific folders or review changes first.
+
+
+To **do this using just `sed`**, assuming you already know the files to modify, here’s how:
+
+---
+
+### 🔹 Replace in a single file:
+
+```bash
+sed -i 's/gnb_cho_candidate_cells_info/gnb_cho_roshan_candidate_cells_info/g' filename.cpp
+```
+
+* `-i` modifies the file in-place.
+* `s/old/new/g` is the substitution command.
+* `g` = replace all occurrences in the line.
+
+---
+
+### 🔹 Replace in all `.cpp` and `.h` files in current directory:
+
+```bash
+sed -i 's/gnb_cho_candidate_cells_info/gnb_cho_roshan_candidate_cells_info/g' *.cpp *.h
+```
+
+⚠️ This only works for files in the **current directory**, not subdirectories.
+
+---
+
+### 🔹 Replace recursively (using `find` + `sed`):
+
+This combines `find` with `sed` to do a full recursive update:
+
+```bash
+find . -type f \( -name "*.cpp" -o -name "*.h" \) -exec sed -i 's/gnb_cho_candidate_cells_info/gnb_cho_roshan_candidate_cells_info/g' {} +
+```
+
+---
+
+Let me know if you want to preview changes without applying them.

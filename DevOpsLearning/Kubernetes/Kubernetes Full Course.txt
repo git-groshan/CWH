@@ -1,0 +1,26 @@
+############## Intro to K8 ############
+Topics - 
+1. What is Kubernetes ?
+2. K8 Arcitecture 
+3. Main K8 Components 
+4. MiniKube and Kubectl - Local Setup 
+5. Main Kubectl commands - K8 CLI 
+6.  K8s YAML configuration file 
+7. Hands On Demo 
+########## Advance Concept #####
+1. K8 Namespaces - Organize your Components 
+2. K8s Ingress 
+3. Helm - Package Manger 
+4. Volumes - Persisting Data in K8s 
+5. K8s StaefulSet - Deploying Stateful Apps 
+6. K8s Services 
+
+
+
+############### What is Kubernetes ? ##############
+Def - It is an Open Source container Orchestration tool 
+- Developed by google 
+- Helps you manage containerized Applications in different deployment environments 
+
+### What problems does Kubernetes solve ?
+

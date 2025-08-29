@@ -1,0 +1,150 @@
+
+root@L7-C17-36:~/roshan/code/5gran# git pull origin 5gran_dev
+Password for 'https://rkgupta@blrgithub1.radisys.com': 
+From https://blrgithub1.radisys.com/scm/lte/5gran
+ * branch                    5gran_dev  -> FETCH_HEAD
+hint: You have divergent branches and need to specify how to reconcile them.
+hint: You can do so by running one of the following commands sometime before
+hint: your next pull:
+hint: 
+hint:   git config pull.rebase false  # merge
+hint:   git config pull.rebase true   # rebase
+hint:   git config pull.ff only       # fast-forward only
+hint: 
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+fatal: Need to specify how to reconcile divergent branches.
+======================================
+This Git error is telling you that your **local branch** and the **remote branch** have **diverged**, and Git doesn’t know how you want to combine the changes — whether to **merge**, **rebase**, or do a **fast-forward**.
+
+Let me explain this step by step:
+
+---
+
+## 🧠 What Does "Diverged Branches" Mean?
+
+When you run:
+
+```bash
+git pull origin 5gran_dev
+```
+
+You're asking Git to:
+
+1. Fetch the latest changes from the remote `5gran_dev` branch
+2. Merge them into your **current local `5gran_dev` branch**
+
+But Git sees that:
+
+* **You have commits locally** that the remote doesn’t have
+* **Remote has commits** that you don’t have
+
+This situation is called a **divergence**.
+
+---
+
+## 📌 Example of Divergence
+
+```
+Local Branch (Yours):    A --- B --- C
+Remote Branch:           A --- D --- E
+```
+
+Both have changed after commit `A` — so Git can't just "fast-forward" or automatically decide what to do.
+
+---
+
+## 🛠 How to Fix It
+
+You need to **tell Git how to combine the changes**.
+
+You have 3 options:
+
+---
+
+### 🔁 Option 1: Merge (Safe & Simple)
+
+This is the default for many users.
+
+Run:
+
+```bash
+git config pull.rebase false
+git pull origin 5gran_dev
+```
+
+Or just:
+
+```bash
+git pull --no-rebase origin 5gran_dev
+```
+
+Git will do this:
+
+* Merge remote changes into your local branch
+* Create a **merge commit**
+
+---
+
+### 🔄 Option 2: Rebase (Cleaner History)
+
+This makes your local commits appear **on top of the remote commits**, like rewriting history.
+
+Run:
+
+```bash
+git config pull.rebase true
+git pull origin 5gran_dev
+```
+
+Or:
+
+```bash
+git pull --rebase origin 5gran_dev
+```
+
+This is cleaner but **can be risky** if others are using your branch.
+
+---
+
+### ⏩ Option 3: Fast-forward Only (No merge allowed)
+
+Use this if you want Git to only allow pulling if there are **no local commits** (i.e., your branch hasn’t diverged).
+
+Run:
+
+```bash
+git pull --ff-only origin 5gran_dev
+```
+
+You’ll see an error if Git cannot fast-forward (like in your case).
+
+---
+
+## 💡 Recommended (One-Time Setup)
+
+If you usually want to **merge**, set it globally:
+
+```bash
+git config --global pull.rebase false
+```
+
+If you prefer **rebase**, use:
+
+```bash
+git config --global pull.rebase true
+```
+
+---
+
+## ✅ What You Can Do Now
+
+If you just want to proceed safely, run:
+
+```bash
+git pull --no-rebase origin 5gran_dev
+```
+
+Let me know if you'd like help choosing between merge or rebase, or if you want to see what exactly has diverged.

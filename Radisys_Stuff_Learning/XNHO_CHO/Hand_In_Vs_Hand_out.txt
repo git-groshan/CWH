@@ -1,0 +1,80 @@
+In 5G (as in LTE), **handover** is the process of transferring an ongoing call or data session from one cell (gNB) to another. However, the terms **"hand\_in"** and **"hand\_out"** are informal but commonly used in logs, KPIs, and network engineering to describe the **direction of the handover**.
+
+---
+
+## 📘 Definitions:
+
+### 🔁 **Hand-in** (Handover In)
+
+* When a **UE enters** a cell **from another cell**.
+* From the **serving cell's perspective**, the UE is coming **into** the cell.
+* **Receiving side** of the handover.
+* Used to count how many UEs are **handed over into** a gNB.
+
+✅ Example:
+UE is handed over **from Cell A → to Cell B**
+For **Cell B**, this is a **hand-in**
+
+---
+
+### 🔁 **Hand-out** (Handover Out)
+
+* When a **UE leaves** a cell and is handed over to a **target cell**.
+* From the **serving cell's perspective**, the UE is going **out**.
+* **Sending side** of the handover.
+* Used to count how many UEs are **handed over from** a gNB.
+
+✅ Example:
+UE is handed over **from Cell A → to Cell B**
+For **Cell A**, this is a **hand-out**
+
+---
+
+## 📊 Why it's important
+
+Network teams track **hand-in and hand-out KPIs** to measure:
+
+* Cell performance
+* Handover success rates
+* Mobility imbalance (if too many hand-outs and fewer hand-ins)
+
+Example KPI names:
+
+* `HO_Attempts_Out`
+* `HO_Success_In`
+* `Inter-gNB_Handover_HandIn_Success`
+
+---
+
+## 🧠 In 5G (NG-RAN)
+
+* **Handover** can be:
+
+  * **Intra-gNB** (within same base station)
+  * **Inter-gNB** (between different gNBs)
+  * **Inter-RAT** (to/from LTE)
+
+* In signaling:
+
+  * `Handover Request` → from source to target
+  * `Handover Request Acknowledge` → from target to source
+  * UE switches cells based on command
+
+---
+
+## 🔧 Example Scenario:
+
+UE is connected to **gNB A** and moving toward **gNB B**.
+
+| Step | Event                  | Perspective             |
+| ---- | ---------------------- | ----------------------- |
+| 1️⃣  | UE moving out of gNB A | **Hand-out** from gNB A |
+| 2️⃣  | UE entering gNB B      | **Hand-in** to gNB B    |
+
+---
+
+Let me know if you’d like:
+
+* Actual 5G RRC/NAS messages involved in the handover
+* Example from `ngap` logs or Wireshark
+* KPI formulas for success/failure rates

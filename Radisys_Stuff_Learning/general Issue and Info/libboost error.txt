@@ -1,0 +1,76 @@
+The error you're seeing:
+
+```
+fatal error: boost/geometry.hpp: No such file or directory
+```
+
+means that your compiler can't find the Boost Geometry library headers, specifically `boost/geometry.hpp`.
+
+---
+
+### ✅ To resolve this:
+
+#### 1. **Install Boost library (if not installed):**
+
+On Ubuntu/Debian:
+
+```bash
+sudo apt update
+sudo apt install libboost-all-dev
+```
+
+On CentOS/RHEL:
+
+```bash
+sudo yum install boost-devel
+```
+
+---
+
+#### 2. **Check if the header exists:**
+
+After installation, confirm the file exists:
+
+```bash
+ls /usr/include/boost/geometry.hpp
+```
+
+If it doesn't exist there, check inside:
+
+```bash
+ls /usr/include/boost/geometry/
+```
+
+The actual path is usually:
+
+```bash
+/usr/include/boost/geometry.hpp     # (meta-header that includes other headers)
+```
+
+---
+
+#### 3. **Ensure your compiler includes the Boost path:**
+
+If Boost is installed in a non-standard directory, you may need to add the include path manually:
+
+**In your Makefile or build command:**
+
+```bash
+-I/path/to/boost/include
+```
+
+e.g.,
+
+```bash
+g++ -I/usr/include main.cpp -o main
+```
+
+Or in CMake:
+
+```cmake
+include_directories(/usr/include/boost)
+```
+
+---
+
+Let me know if you're using **CMake**, **Makefile**, or another build system — I can give you exact instructions for that too.
